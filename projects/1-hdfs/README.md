@@ -98,14 +98,19 @@ An HTTP API uses GET for reading, PUT or PATCH for updating, DEL for deleting an
 > Answer each question briefly (at most, 2 sentences per question).
 
 **[1 mark] Watch [Docker in 100 Seconds](https://www.youtube.com/watch?v=Gjnup-PuquQ). What is a Dockerfile?**
+A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble a Docker image
 
 **[1 mark] What is a Docker image?**
+A Docker image is a snapshot or blueprint of the libraries and dependencies required inside a Docker container for an application to run
 
 **[1 mark] What is a Docker container?**
+A Docker container is a lightweight, standalone, and executable unit that packages an application along with its dependencies, libraries, and configuration files. It runs consistently across different environments by isolating the application from the host system.
 
 **[1 mark] What is Docker compose?**
+Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience.
 
 **[1 mark] What is a Docker compose file?**
+A Docker Compose file is a YAML configuration file used to define and manage multi-container Docker applications. It specifies describes all the services and containers that we need.
 
 ---
 
