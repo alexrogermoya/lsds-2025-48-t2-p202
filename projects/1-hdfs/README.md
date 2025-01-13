@@ -45,25 +45,25 @@ Remember you must format your code with black and follow PEP8 conventions.
 > [!TIP]
 > Answer each question briefly (at most, 2 sentences per question).
 
-**[1 mark] What are files divided into?**
+**[1 mark] What are files divided into?** Files are divided into blocks.
 
-**[1 mark] Are all blocks the same size?**
+**[1 mark] Are all blocks the same size?** All blocks in a file except the last block are the same size (128Mb by default). 
 
-**[1 mark] How many instances of the `namenode` can run in HDFS?**
+**[1 mark] How many instances of the `namenode` can run in HDFS?** Only one namenode can run at time at HDFS. 
 
-**[1 mark] Does the `namenode` scale horizontally or vertically? How does it impact availability?**
+**[1 mark] Does the `namenode` scale horizontally or vertically? How does it impact availability?** The namenode scales vertically, and the changes might need to temporarily shut down the system. 
 
-**[1 mark] How many instances of the `datanode` can run in HDFS?**
+**[1 mark] How many instances of the `datanode` can run in HDFS?** Multiple instances of datanode can run in HDFS. 
 
-**[1 mark] Does the `datanode` scale horizontally or vertically? How does it impact availability?**
+**[1 mark] Does the `datanode` scale horizontally or vertically? How does it impact availability?** The datanode scales horizontall, and this implies that we do not need to shut down the system. 
 
-**[1 mark] Take a look at [Uploading files](#uploading-files). What is the main difference when writing a file to SSHDFS when compared to HDFS in relation to replication?**
+**[1 mark] Take a look at [Uploading files](#uploading-files). What is the main difference when writing a file to SSHDFS when compared to HDFS in relation to replication?** In HDFS, each block is replicated across multiple datanodes using a pipeline, but in SSHDFS, each block is directly sent to the corresponding datanode without following a pipeline mechanism.
 
-**[1 mark] How is the image constructed from the journal (WAL) and checkpoint?**
+**[1 mark] How is the image constructed from the journal (WAL) and checkpoint?** The image is constructed by replaying the journal from the last checkpoint, where the checkpoint provides the state of the system at a specific point in time.
 
-**[1 mark] Take a look at [namenode](#namenode-filesystem). Does SSHDFS have a journal? What is the main problem with this approach?**
+**[1 mark] Take a look at [namenode](#namenode-filesystem). Does SSHDFS have a journal? What is the main problem with this approach?** SSHDFS does not have a journal in the same way as HDFS. It relies on the files.json file to store file metadata. The main problem with this approach is that without a journal, SSHDFS may have slower recovery times and potential data loss or inconsistency if the system crashes. 
 
-**[1 mark] How does the replication factor impact durability?**
+**[1 mark] How does the replication factor impact durability?** A higher replication factor increases durability by ensuring multiple copies of data exist on different nodes. 
 
 ---
 
