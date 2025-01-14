@@ -73,14 +73,22 @@ Remember you must format your code with black and follow PEP8 conventions.
 > Answer each question briefly (at most, 2 sentences per question).
 
 **[1 mark] What is the difference between TCP and UDP?**
+TCP is a connection oriented protocol that ensures that delivers data accurately and in order. It is used in web browsing or file transfers.
+UDP is a connectionless protocol that sacrifices reliability for low latency and fast data transfer. It is used for streaming and gaming.
 
 **[1 mark] What is HTTP? Is HTTP based on TCP or UDP?**
+HTTP (Hypertext Transfer Protocol) is a high level network protocol that enables client and responses to each other. The HTTP request and response is sent inside the “data” section of a TCP packet.
 
 **[1 mark] What is an API?**
+The API of a service is the list of operations that the client can trigger on the service.
 
 **[1 mark] Watch [RESTful APIs in 100 Seconds](https://www.youtube.com/watch?v=-MTSQjw5DrM) and/or [What is a REST API?](https://www.youtube.com/watch?v=-mN3VyJuCjM). What is an HTTP API? What is an HTTP REST API?**
+An HTTP API enables applications to interact over the web using the HTTP protocol, often exchanging data in formats like JSON or XML. It allows clients to execute actions on a server, such as fetching or updating information
+
+A REST API is a standardized way for applications to communicate over the internet using HTTP, following REST principles that define how to handle data through URLs and standard methods (GET, POST, PUT, DELETE). 
 
 **[1 mark] What 4 verbs does an HTTP API use for representing the actions of reading, updating, deleting and creating?**
+An HTTP API uses GET for reading, PUT or PATCH for updating, DEL for deleting and POST for creating.
 
 ---
 
@@ -90,14 +98,19 @@ Remember you must format your code with black and follow PEP8 conventions.
 > Answer each question briefly (at most, 2 sentences per question).
 
 **[1 mark] Watch [Docker in 100 Seconds](https://www.youtube.com/watch?v=Gjnup-PuquQ). What is a Dockerfile?**
+A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble a Docker image
 
 **[1 mark] What is a Docker image?**
+A Docker image is a snapshot or blueprint of the libraries and dependencies required inside a Docker container for an application to run
 
 **[1 mark] What is a Docker container?**
+A Docker container is a lightweight, standalone, and executable unit that packages an application along with its dependencies, libraries, and configuration files. It runs consistently across different environments by isolating the application from the host system.
 
 **[1 mark] What is Docker compose?**
+Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience.
 
 **[1 mark] What is a Docker compose file?**
+A Docker Compose file is a YAML configuration file used to define and manage multi-container Docker applications. It specifies describes all the services and containers that we need.
 
 ---
 
