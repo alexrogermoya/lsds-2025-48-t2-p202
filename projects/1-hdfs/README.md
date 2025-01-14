@@ -122,13 +122,13 @@ Inside the folder [projects\1-hdfs\testserver1](./testserver1/), follow the [Fas
 
 The following screenshoot shows the response from the browser when accessing the /items/512 endpoint with the query parameter q=lsds25:
 
-![screenshoot S1Q4-1](./testserver1\S1Q4\S1Q4-1.png) 
+![screenshoot S1Q4-1](./testserver1/S1Q4/S1Q4-1.png) 
 
 **[1 mark] Paste a screenshot where you do the same GET request to your service but using `curl` in the terminal. Run `curl -X GET http://127.0.0.1:8000/items/835?q=lsds25`.** 
 
 The following screenshot demonstrates the output of the curl command for the GET request to /items/835 with the query parameter q=lsds25:
 
-![screenshoot S1Q4-2](./testserver1\S1Q4\S1Q4-2.png) 
+![screenshoot S1Q4-2](./testserver1/S1Q4/S1Q4-2.png) 
 
 **[2 marks] Implement a new endpoint of your API: `POST /sum`.** 
 
@@ -159,7 +159,7 @@ We have implemented the new endpoint of the API `POST /sum` at the [main.py](./t
 
 This screenshot displays the terminal output of the curl POST request to the /sum endpoint:
 
-![screenshoot S1Q4-3](./testserver1\S1Q4\S1Q4-3.png) 
+![screenshoot S1Q4-3](./testserver1/S1Q4/S1Q4-3.png) 
 ---
 
 ### [S1Q5] [5 marks] Dockerizing a service
