@@ -5,15 +5,17 @@ The goal of this lab is to build a distributed file storage system that allows t
 # Table of contents
 
 - [Required exercises](#required-exercises)
-    - [Seminar 1: Introduction to HDFS and APIs](#seminar-1-introduction-to-hdfs-services-and-apis)
-    - [Lab 1: Building the namenode](#lab-1-building-the-namenode)
-    - [Lab 2: Building the datanode](#lab-2-building-the-datanode)
-    - [Seminar 2: Building a Python client](#seminar-2-building-a-python-client)
+
+  - [Seminar 1: Introduction to HDFS and APIs](#seminar-1-introduction-to-hdfs-services-and-apis)
+  - [Lab 1: Building the namenode](#lab-1-building-the-namenode)
+  - [Lab 2: Building the datanode](#lab-2-building-the-datanode)
+  - [Seminar 2: Building a Python client](#seminar-2-building-a-python-client)
 
 - [Design](#design)
-    - [client](#client)
-    - [namenode](#namenode)
-    - [datanode](#datanode)
+
+  - [client](#client)
+  - [namenode](#namenode)
+  - [datanode](#datanode)
 
 - [Additional exercises](#additional-exercises)
 
@@ -47,23 +49,23 @@ Remember you must format your code with black and follow PEP8 conventions.
 
 **[1 mark] What are files divided into?** Files are divided into blocks.
 
-**[1 mark] Are all blocks the same size?** All blocks in a file except the last block are the same size (128Mb by default). 
+**[1 mark] Are all blocks the same size?** All blocks in a file except the last block are the same size (128Mb by default).
 
-**[1 mark] How many instances of the `namenode` can run in HDFS?** Only one namenode can run at time at HDFS. 
+**[1 mark] How many instances of the `namenode` can run in HDFS?** Only one namenode can run at time at HDFS.
 
-**[1 mark] Does the `namenode` scale horizontally or vertically? How does it impact availability?** The namenode scales vertically, and the changes might need to temporarily shut down the system. 
+**[1 mark] Does the `namenode` scale horizontally or vertically? How does it impact availability?** The namenode scales vertically, and the changes might need to temporarily shut down the system.
 
-**[1 mark] How many instances of the `datanode` can run in HDFS?** Multiple instances of datanode can run in HDFS. 
+**[1 mark] How many instances of the `datanode` can run in HDFS?** Multiple instances of datanode can run in HDFS.
 
-**[1 mark] Does the `datanode` scale horizontally or vertically? How does it impact availability?** The datanode scales horizontall, and this implies that we do not need to shut down the system. 
+**[1 mark] Does the `datanode` scale horizontally or vertically? How does it impact availability?** The datanode scales horizontall, and this implies that we do not need to shut down the system.
 
 **[1 mark] Take a look at [Uploading files](#uploading-files). What is the main difference when writing a file to SSHDFS when compared to HDFS in relation to replication?** In HDFS, each block is replicated across multiple datanodes using a pipeline, but in SSHDFS, each block is directly sent to the corresponding datanode without following a pipeline mechanism.
 
 **[1 mark] How is the image constructed from the journal (WAL) and checkpoint?** The image is constructed by replaying the journal from the last checkpoint, where the checkpoint provides the state of the system at a specific point in time.
 
-**[1 mark] Take a look at [namenode](#namenode-filesystem). Does SSHDFS have a journal? What is the main problem with this approach?** SSHDFS does not have a journal in the same way as HDFS. It relies on the files.json file to store file metadata. The main problem with this approach is that without a journal, SSHDFS may have slower recovery times and potential data loss or inconsistency if the system crashes. 
+**[1 mark] Take a look at [namenode](#namenode-filesystem). Does SSHDFS have a journal? What is the main problem with this approach?** SSHDFS does not have a journal in the same way as HDFS. It relies on the files.json file to store file metadata. The main problem with this approach is that without a journal, SSHDFS may have slower recovery times and potential data loss or inconsistency if the system crashes.
 
-**[1 mark] How does the replication factor impact durability?** A higher replication factor increases durability by ensuring multiple copies of data exist on different nodes. 
+**[1 mark] How does the replication factor impact durability?** A higher replication factor increases durability by ensuring multiple copies of data exist on different nodes.
 
 ---
 
@@ -85,7 +87,7 @@ The API of a service is the list of operations that the client can trigger on th
 **[1 mark] Watch [RESTful APIs in 100 Seconds](https://www.youtube.com/watch?v=-MTSQjw5DrM) and/or [What is a REST API?](https://www.youtube.com/watch?v=-mN3VyJuCjM). What is an HTTP API? What is an HTTP REST API?**
 An HTTP API enables applications to interact over the web using the HTTP protocol, often exchanging data in formats like JSON or XML. It allows clients to execute actions on a server, such as fetching or updating information
 
-A REST API is a standardized way for applications to communicate over the internet using HTTP, following REST principles that define how to handle data through URLs and standard methods (GET, POST, PUT, DELETE). 
+A REST API is a standardized way for applications to communicate over the internet using HTTP, following REST principles that define how to handle data through URLs and standard methods (GET, POST, PUT, DELETE).
 
 **[1 mark] What 4 verbs does an HTTP API use for representing the actions of reading, updating, deleting and creating?**
 An HTTP API uses GET for reading, PUT or PATCH for updating, DEL for deleting and POST for creating.
@@ -118,19 +120,19 @@ A Docker Compose file is a YAML configuration file used to define and manage mul
 
 Inside the folder [projects\1-hdfs\testserver1](./testserver1/), follow the [Fastapi quickstart](https://fastapi.tiangolo.com/#installation) tutorial to build a service with an HTTP API.
 
-**[1 mark] Paste a screenshot where you do a GET request to your service using the browser. Open `http://127.0.0.1:8000/items/512?q=lsds25`**. 
+**[1 mark] Paste a screenshot where you do a GET request to your service using the browser. Open `http://127.0.0.1:8000/items/512?q=lsds25`**.
 
 The following screenshoot shows the response from the browser when accessing the /items/512 endpoint with the query parameter q=lsds25:
 
-![screenshoot S1Q4-1](./testserver1/S1Q4/S1Q4-1.png) 
+![screenshoot S1Q4-1](./images/S1Q4/S1Q4-1.png)
 
-**[1 mark] Paste a screenshot where you do the same GET request to your service but using `curl` in the terminal. Run `curl -X GET http://127.0.0.1:8000/items/835?q=lsds25`.** 
+**[1 mark] Paste a screenshot where you do the same GET request to your service but using `curl` in the terminal. Run `curl -X GET http://127.0.0.1:8000/items/835?q=lsds25`.**
 
 The following screenshot demonstrates the output of the curl command for the GET request to /items/835 with the query parameter q=lsds25:
 
-![screenshoot S1Q4-2](./testserver1/S1Q4/S1Q4-2.png) 
+![screenshoot S1Q4-2](./images/S1Q4/S1Q4-2.png)
 
-**[2 marks] Implement a new endpoint of your API: `POST /sum`.** 
+**[2 marks] Implement a new endpoint of your API: `POST /sum`.**
 
 The endpoint must receive a [JSON object with two numbers in the body](https://fastapi.tiangolo.com/tutorial/body/) and return the sum.
 
@@ -139,28 +141,29 @@ POST http://127.0.0.1:8000/sum
 ```
 
 Body:
+
 ```json
 {
-    "x": 23,
-    "y": 32
+  "x": 23,
+  "y": 32
 }
 ```
 
 Response:
+
 ```json
 {
-    "result": 55
+  "result": 55
 }
 ```
 
-We have implemented the new endpoint of the API `POST /sum` at the [main.py](./testserver1/main.py) file. 
+We have implemented the new endpoint of the API `POST /sum` at the [main.py](./testserver1/main.py) file.
 
-**[1 mark] Paste a screenshot where you test the POST request to your service using `curl`. Run `curl -X POST http://127.0.0.1:8000/sum -H "Content-Type: application/json" -d '{"x":23, "y": 32}'` in the terminal**. 
+**[1 mark] Paste a screenshot where you test the POST request to your service using `curl`. Run `curl -X POST http://127.0.0.1:8000/sum -H "Content-Type: application/json" -d '{"x":23, "y": 32}'` in the terminal**.
 
 This screenshot displays the terminal output of the curl POST request to the /sum endpoint:
 
-![screenshoot S1Q4-3](./testserver1/S1Q4/S1Q4-3.png) 
----
+## ![screenshoot S1Q4-3](./images/S1Q4/S1Q4-3.png)
 
 ### [S1Q5] [5 marks] Dockerizing a service
 
@@ -178,7 +181,7 @@ Go back to [projects\1-hdfs\testserver1](./testserver1/). Adapt it so it runs in
 
 During this lab session, you must build the `namenode` service as described in [namenode](#namenode).
 
-Create a basic FastAPI service in [projects\1-hdfs\namenode](./namenode/) that can be dockerized like [projects\1-hdfs\testserver2](./testserver2/). 
+Create a basic FastAPI service in [projects\1-hdfs\namenode](./namenode/) that can be dockerized like [projects\1-hdfs\testserver2](./testserver2/).
 
 ```
 /namenode
@@ -201,7 +204,7 @@ Test it works with curl and paste a screenshot.
 
 ### [L1Q1] [15 marks] POST /files
 
-Implement the [POST /files](#post-files) endpoint. 
+Implement the [POST /files](#post-files) endpoint.
 
 When a new file is created, you must return the number of blocks and the datanode where they need to be stored by the client:
 
@@ -211,7 +214,7 @@ When a new file is created, you must return the number of blocks and the datanod
 
 - Compute the number of blocks and assign them to `datanodes` using the [modulo-based policy](#block-and-replica-placement)
 
-- [Write](https://python.land/data-processing/working-with-json#How_to_write_JSON_to_a_file_in_python) the [metadata of the new file to `files.json`](#namenode-filesystem) whenever a new file is created. 
+- [Write](https://python.land/data-processing/working-with-json#How_to_write_JSON_to_a_file_in_python) the [metadata of the new file to `files.json`](#namenode-filesystem) whenever a new file is created.
 
 Test it works with curl and paste a screenshot. Verify the new file is also stored to `files.json` and paste a screenshot.
 
@@ -219,9 +222,9 @@ Test it works with curl and paste a screenshot. Verify the new file is also stor
 
 ### [L1Q2] [10 marks] GET /files/{filename}
 
-Implement the [GET /files/{filename}](#get-filesfilename) endpoint. 
+Implement the [GET /files/{filename}](#get-filesfilename) endpoint.
 
-[Read the file name being requested from the URL path](https://fastapi.tiangolo.com/tutorial/path-params/). Then [read](https://python.land/data-processing/working-with-json#How_to_read_a_JSON_file_in_python) the file metadata stored in `files.json`.  Finally, return it.
+[Read the file name being requested from the URL path](https://fastapi.tiangolo.com/tutorial/path-params/). Then [read](https://python.land/data-processing/working-with-json#How_to_read_a_JSON_file_in_python) the file metadata stored in `files.json`. Finally, return it.
 
 Test it works with curl and paste a screenshot.
 
@@ -242,6 +245,7 @@ services:
     ports:
       - "8000:80"
 ```
+
 Start the service: `docker compose up`.
 
 Test you can create a file and get a file with curl and paste a screenshot.
@@ -281,7 +285,7 @@ Implement the [PUT /files/{filename}/blocks/{block_number}/content](#put-filesfi
 > You can [use the `UploadFile` object to receive files](https://fastapi.tiangolo.com/tutorial/request-files/#define-file-parameters).
 
 > [!TIP]
-> You can use the [`open` and `write`](https://www.geeksforgeeks.org/python-write-bytes-to-file/) functions to write bytes to a new file. 
+> You can use the [`open` and `write`](https://www.geeksforgeeks.org/python-write-bytes-to-file/) functions to write bytes to a new file.
 
 Test you can upload a file as if it were a single block with curl: `curl -F "file=@./test_files/cat.jpg" -X PUT localhost:8001/files/cat.jpg/blocks/0/content`. Paste a screenshot of putting a block to the datanode with curl and how it is stored in the filesystem inside the container (using the `Files` tab in `Docker Desktop`).
 
@@ -289,8 +293,8 @@ Test you can upload a file as if it were a single block with curl: `curl -F "fil
 
 ### [L2Q1] [10 marks] GET /files/{filename}/blocks/{block_number}/content
 
-Implement the [GET /files/{filename}/blocks/{block_number}/content](#get-filesfilenameblocksblock_numbercontent) endpoint. Read the file name and block number [from the URL path](https://fastapi.tiangolo.com/tutorial/path-params/). When a block is GET, the `datanode` must read it from [its file system](#datanode-filesystem) at the path `datanode/storage/<filename>/<block_number>`. 
-    
+Implement the [GET /files/{filename}/blocks/{block_number}/content](#get-filesfilenameblocksblock_numbercontent) endpoint. Read the file name and block number [from the URL path](https://fastapi.tiangolo.com/tutorial/path-params/). When a block is GET, the `datanode` must read it from [its file system](#datanode-filesystem) at the path `datanode/storage/<filename>/<block_number>`.
+
 > [!TIP]
 > You can [use the `FileResponse` object to return files](https://fastapi.tiangolo.com/advanced/custom-response/#fileresponse).
 
@@ -313,7 +317,8 @@ During this seminar, you must build the [Python client](#client) which allows up
 ### [S2Q0] [5 marks] List datanodes
 
 Create a new Python script `projects\1-hdfs\client\list_datanodes.py` that retrieves all the `datanodes` from the `namenode` and prints the URLs:
-- Retrieve the host and port of each `datanode` dynamically [using the `namenode` API](#get-datanodes). 
+
+- Retrieve the host and port of each `datanode` dynamically [using the `namenode` API](#get-datanodes).
 - Then, print the result nicely.
 
 > [!TIP]
@@ -326,26 +331,27 @@ Run the `list_datanodes.py` script and paste a screenshot of the result.
 ### [S2Q1] [10 marks] Upload a file
 
 Create a new Python script `projects\1-hdfs\client\upload.py` that asks the user for a file path, creates a new file in the `namenode` and uploads each block (and each replica) to the `datanodes` that the `namenode` assigned:
-- Ask the user for a path using `input`. 
-- Ask the user for a filename using `input`. 
+
+- Ask the user for a path using `input`.
+- Ask the user for a filename using `input`.
 - [Check the file size](https://stackoverflow.com/questions/2104080/how-do-i-check-file-size-in-python)
 - Create the file using the [POST /files](#post-files) endpoint in the `namenode` API.
 
 > [!TIP]
-> The equivalent of `curl` in Python is the `requests` module. To make a POST request in Python, [use the `requests.post` function](https://stackoverflow.com/a/26344315). 
+> The equivalent of `curl` in Python is the `requests` module. To make a POST request in Python, [use the `requests.post` function](https://stackoverflow.com/a/26344315).
 
-- Read [the bytes of the file](https://stackoverflow.com/questions/1035340/reading-binary-file-and-looping-over-each-byte) block by block. 
+- Read [the bytes of the file](https://stackoverflow.com/questions/1035340/reading-binary-file-and-looping-over-each-byte) block by block.
 - Finally, PUT each block and each replica to the assigned `datanode`.
 
 > [!TIP]
 > In Python, you can use the `requests.put` with the `files` parameter to upload some binary content.
 >
->```python
->import requests
->requests.put(url, files={
+> ```python
+> import requests
+> requests.put(url, files={
 >    'file': block_as_bytes
->})
->```  
+> })
+> ```
 
 Run the `upload.py` script and paste a screenshot of the result and how the blocks are stored in the different `datanodes` (inside Docker).
 
@@ -354,24 +360,23 @@ Run the `upload.py` script and paste a screenshot of the result and how the bloc
 ### [S2Q2] [10 marks] Download a file
 
 Create a new Python script `projects\1-hdfs\client\download.py` that asks the user for a filename, a destination path, downloads all the blocks from the `datanodes` and writes them all together to the destination path as the complete file:
+
 - Ask the user for a filename using `input`.
-- First, retrieve the file metadata using the [GET /files/{filename}](#get-filesfilename) endpoint of the `namenode` API. 
+- First, retrieve the file metadata using the [GET /files/{filename}](#get-filesfilename) endpoint of the `namenode` API.
 - Then, use the [GET /files/{filename}/blocks/{block}/content](#get-filesfilenameblocksblock_numbercontent) endpoint of the `datanode` API to download each block from one of the replicas.
 - Finally, [write all blocks as one final file](https://www.geeksforgeeks.org/python-write-bytes-to-file/).
 
 > [!TIP]
 > In Python, you can use the `requests.get` with the `content` method to download some binary content.
 >
->```python
->import requests
->block_as_bytes = requests.get(url).content
->```  
-
+> ```python
+> import requests
+> block_as_bytes = requests.get(url).content
+> ```
 
 Run the `upload.py` and `download.py` scripts. Paste a screenshot of how you can upload and download files.
 
 ---
-
 
 # Design
 
@@ -382,6 +387,7 @@ Run the `upload.py` and `download.py` scripts. Paste a screenshot of how you can
 > SSHDFS is a simplified version of HDFS. Read and study [The Hadoop Distributed File System paper](https://ieeexplore.ieee.org/document/5496972) first to make sure you have a good understanding of the system.
 
 SSHDFS is composed of 2 services and 1 client:
+
 - The [**client**](#client) allows the user to upload and download files from SSHDFS.
 - The [**datanode** service](#datanode) stores blocks.
 - The [**namenode** service](#namenode) stores which blocks compose a file and which `datanode` has each block.
@@ -402,7 +408,7 @@ In SSHDFS, files are divided into blocks before being stored. A block is a chunk
 
 #### Uploading files
 
-To upload a file, the client first creates the file in the `namenode`. Then, it divides the file into blocks and sends each block to the corresponding `datanode`. 
+To upload a file, the client first creates the file in the `namenode`. Then, it divides the file into blocks and sends each block to the corresponding `datanode`.
 
 If the `namenode` is configured with a `replication_factor` higher than 1, then the client sends each block to the corresponding `datanode`. In other words, there is no write pipelines in SSHDFS (compared to HDFS).
 
@@ -415,6 +421,7 @@ To download a file, the client fetches each blocks from the corresponding `datan
 In SSHDFS, there is exactly 1 instance of the `namenode` in the system. I.e., the `namenode` is scaled vertically.
 
 In order for the `client` to create or retrieve a file from SSHDFS, the `namenode` exposes an HTTP REST API. The API for the `namenode` only allows three operations:
+
 - [Get a list of datanodes in the system](#get-datanodes)
 - [Create a new file](#post-files)
 - [Get the information from an existing file](#get-filesfilename)
@@ -427,82 +434,81 @@ The `namenode` reads the `config.json` file to get the system configuration, inc
 
 ```json
 {
-    "datanodes": [
-        {
-            "host": "localhost",
-            "port": 8001
-        },
-        {
-            "host": "localhost",
-            "port": 8002
-        },
-        {
-            "host": "localhost",
-            "port": 8003
-        }
-    ],
-    "replication_factor": 2,
-    "block_size": 1000000
+  "datanodes": [
+    {
+      "host": "localhost",
+      "port": 8001
+    },
+    {
+      "host": "localhost",
+      "port": 8002
+    },
+    {
+      "host": "localhost",
+      "port": 8003
+    }
+  ],
+  "replication_factor": 2,
+  "block_size": 1000000
 }
 ```
 
-
-The `namenode` writes to the `files.json` file every file that is created in the system. At the beginning, the `files.json` file is an empty object (`{}`). But when a client creates a file, the `namenode` stores the file metadata like in the following example. 
+The `namenode` writes to the `files.json` file every file that is created in the system. At the beginning, the `files.json` file is an empty object (`{}`). But when a client creates a file, the `namenode` stores the file metadata like in the following example.
 
 ```json
 {
-    "cat.jpg": {
-        "file_name": "cat.jpg",
-        "size": 295,
-        "blocks": [
-            {
-                "number": 0,
-                "size": 100,
-                "replicas": [
-                    {
-                        "host": "localhost",
-                        "port": 8001
-                    }
-                ]
-            },
-            {
-                "number": 1,
-                "size": 100,
-                "replicas": [
-                    {
-                        "host": "localhost",
-                        "port": 8002
-                    }
-                ]
-            },
-            {
-                "number": 2,
-                "size": 95,
-                "replicas": [
-                    {
-                        "host": "localhost",
-                        "port": 8003
-                    }
-                ]
-            }
+  "cat.jpg": {
+    "file_name": "cat.jpg",
+    "size": 295,
+    "blocks": [
+      {
+        "number": 0,
+        "size": 100,
+        "replicas": [
+          {
+            "host": "localhost",
+            "port": 8001
+          }
         ]
-    },
-    "somefile.txt": {
-        "file_name": "somefile.txt",
+      },
+      {
+        "number": 1,
+        "size": 100,
+        "replicas": [
+          {
+            "host": "localhost",
+            "port": 8002
+          }
+        ]
+      },
+      {
+        "number": 2,
         "size": 95,
-        "blocks": [
-            {
-                "number": 0,
-                "size": 95,
-                "replicas": [
-                    {
-                        "host": "localhost",
-                        "port": 8001
-                    }
-                ]
-            }
+        "replicas": [
+          {
+            "host": "localhost",
+            "port": 8003
+          }
         ]
-    }
+      }
+    ]
+  },
+  "somefile.txt": {
+    "file_name": "somefile.txt",
+    "size": 95,
+    "blocks": [
+      {
+        "number": 0,
+        "size": 95,
+        "replicas": [
+          {
+            "host": "localhost",
+            "port": 8001
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
@@ -519,28 +525,29 @@ GET http://localhost:8000/datanodes
 ```
 
 Response:
+
 ```json
 {
-    "datanodes": [
-        {
-            "host": "localhost",
-            "port": 8001
-        },
-        {
-            "host": "localhost",
-            "port": 8002
-        },
-        {
-            "host": "localhost",
-            "port": 8003
-        }
-    ]
+  "datanodes": [
+    {
+      "host": "localhost",
+      "port": 8001
+    },
+    {
+      "host": "localhost",
+      "port": 8002
+    },
+    {
+      "host": "localhost",
+      "port": 8003
+    }
+  ]
 }
 ```
 
 #### POST /files
 
-POSTing to `/files` creates a new file in the `namenode`.  When a file is created, the response from the `namenode` contains the information of where the file must be stored.
+POSTing to `/files` creates a new file in the `namenode`. When a file is created, the response from the `namenode` contains the information of where the file must be stored.
 
 For example, the `client` can create a file called `myfile.jpg` that weights 295 bytes to the `namenode` with address `localhost:8000` (configured with a replication factor of 2) as follows:
 
@@ -549,62 +556,64 @@ POST http://localhost:8000/files
 ```
 
 Body:
+
 ```json
 {
-    "file_name": "myfile.jpg",
-    "size": 295
+  "file_name": "myfile.jpg",
+  "size": 295
 }
 ```
 
 Response:
+
 ```json
 {
-    "file_name": "myfile.jpg",
-    "size": 295,
-    "blocks": [
+  "file_name": "myfile.jpg",
+  "size": 295,
+  "blocks": [
+    {
+      "number": 0,
+      "size": 100,
+      "replicas": [
         {
-            "number": 0,
-            "size": 100,
-            "replicas": [
-                {
-                    "host": "localhost",
-                    "port": 8001
-                },
-                {
-                    "host": "localhost",
-                    "port": 8002
-                }
-            ]
+          "host": "localhost",
+          "port": 8001
         },
         {
-            "number": 1,
-            "size": 100,
-            "replicas": [
-                {
-                    "host": "localhost",
-                    "port": 8002
-                },
-                {
-                    "host": "localhost",
-                    "port": 8003
-                }
-            ]
-        },
-        {
-            "number": 2,
-            "size": 95,
-            "replicas": [
-                {
-                    "host": "localhost",
-                    "port": 8003
-                },
-                {
-                    "host": "localhost",
-                    "port": 8001
-                }
-            ]
+          "host": "localhost",
+          "port": 8002
         }
-    ]
+      ]
+    },
+    {
+      "number": 1,
+      "size": 100,
+      "replicas": [
+        {
+          "host": "localhost",
+          "port": 8002
+        },
+        {
+          "host": "localhost",
+          "port": 8003
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "size": 95,
+      "replicas": [
+        {
+          "host": "localhost",
+          "port": 8003
+        },
+        {
+          "host": "localhost",
+          "port": 8001
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -615,27 +624,28 @@ In SSHDFS, we will use a very simple block and replica placement strategy.
 The first block of a file will always be stored in datanode 1. Then, all the following blocks will be assigned using the modulo operator: `datanode_index = (block_number % total_datanodes)`.
 
 For example, consider a system with 3 `datanodes`, `block_size=100` and `replication_factor=1`. Then, if a client wants to store a file that weights 495 bytes:
+
 - File is divided in 5 blocks: block 1 (0 - 100 bytes), block 2 (100 - 200 bytes), block 3 (200 - 300 bytes), block 4 (300 - 400 bytes) and block 5 (400 - 495 bytes)
 - We assign each block to a datanode using the modulo operation:
-    - block 1 replica 1 (datanode 1)
-    - block 2 replica 1 (datanode 2)
-    - block 3 replica 1 (datanode 3)
-    - block 4 replica 1 (datanode 1)
-    - block 5 replica 1 (datanode 2)
+  - block 1 replica 1 (datanode 1)
+  - block 2 replica 1 (datanode 2)
+  - block 3 replica 1 (datanode 3)
+  - block 4 replica 1 (datanode 1)
+  - block 5 replica 1 (datanode 2)
 
 To place replicas, we will use a similar logic. Each replica will be placed to the next `datanode`: `datanode_index = ((first_replica_datanode_index + replica_number) % total_datanodes)`.
 
 For example, consider a system with 3 `datanodes`, `block_size=100` and `replication_factor=2`. Then, if a client wants to store a file that weights 295 bytes:
+
 - File is divided in 3 blocks: block 1 (0 - 100 bytes), block 2 (100 - 200 bytes), block 3 (200 - 295 bytes)
 - We assign each block and replica to a datanode using the modulo operation:
-    - block 1 replica 1 (datanode 1), block 1 replica 2 (datanode 2)
-    - block 2 replica 1 (datanode 2), block 2 replica 2 (datanode 3)
-    - block 3 replica 1 (datanode 3), block 3 replica 2 (datanode 1)
-
+  - block 1 replica 1 (datanode 1), block 1 replica 2 (datanode 2)
+  - block 2 replica 1 (datanode 2), block 2 replica 2 (datanode 3)
+  - block 3 replica 1 (datanode 3), block 3 replica 2 (datanode 1)
 
 #### GET /files/{filename}
 
-GETting `/files/{filename}` retrieves the file metadata from the `namenode`. 
+GETting `/files/{filename}` retrieves the file metadata from the `namenode`.
 
 For example, the `client` can retrieve all the information about a file called `myfile.jpg` from the `namenode` with address `localhost:8000` as follows:
 
@@ -644,42 +654,43 @@ GET http://localhost:8000/files/myfile.jpg
 ```
 
 Response:
+
 ```json
 {
-    "file_name": "myfile.jpg",
-    "size": 295,
-    "blocks": [
+  "file_name": "myfile.jpg",
+  "size": 295,
+  "blocks": [
+    {
+      "number": 0,
+      "size": 100,
+      "replicas": [
         {
-            "number": 0,
-            "size": 100,
-            "replicas": [
-                {
-                    "host": "localhost",
-                    "port": 8001
-                }
-            ]
-        },
-        {
-            "number": 1,
-            "size": 100,
-            "replicas": [
-                {
-                    "host": "localhost",
-                    "port": 8002
-                }
-            ]
-        },
-        {
-            "number": 2,
-            "size": 95,
-            "replicas": [
-                {
-                    "host": "localhost",
-                    "port": 8002
-                }
-            ]
+          "host": "localhost",
+          "port": 8001
         }
-    ]
+      ]
+    },
+    {
+      "number": 1,
+      "size": 100,
+      "replicas": [
+        {
+          "host": "localhost",
+          "port": 8002
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "size": 95,
+      "replicas": [
+        {
+          "host": "localhost",
+          "port": 8002
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -690,12 +701,14 @@ If the file does not exist in the `namenode`, the response must be a 404.
 In SSHDFS, there are many instances of the `datanode`. I.e., the `datanode` is scaled horizontally.
 
 In order for the `client` to upload and download blocks from the `datanode`, the `datanode` exposes an HTTP API. The API for the `datanode` only allows two operations:
+
 - [Upload a block](#put-filesfilenameblocksblock_numbercontent)
 - [Download a block](#get-filesfilenameblocksblock_numbercontent)
 
 #### datanode filesystem
 
 When a block is stored in a `datanode` server, the block is persisted to the file system. Blocks are persisted to the path `datanode/storage/<filename>/<block_number>`. In other words, we create one folder with the name of each file the `datanode` stores, and we store the blocks inside the folder, each in a file with the block number as its name (without extension). For example, the file system of a `datanode` that stores blocks 0 and 23 of the file `cat1.jpg`, block 5 of the file `cat29.jpg` and blocks 2 and 22 of the file `cat3.jpg` looks as follows:
+
 ```
 /datanode
     /storage
@@ -707,47 +720,43 @@ When a block is stored in a `datanode` server, the block is persisted to the fil
             22
         /cat29.jpg
             5
-``` 
+```
 
 #### PUT /files/{filename}/blocks/{block_number}/content
 
-PUTting a block to `/files/{filename}/blocks/{block_number}/content` uploads it to the `datanode`. 
+PUTting a block to `/files/{filename}/blocks/{block_number}/content` uploads it to the `datanode`.
 
 For example, to upload the block `0` of a file named `myfile.jpg` in the `datanode` with address `localhost:8001`, the `client` must send a request with the block [attached as a file](https://api4.ai/blog/how-to-post-a-file-via-http-request) to `PUT http://localhost:8001/files/myfile.jpg/blocks/0/content`.
 
 #### GET /files/{filename}/blocks/{block_number}/content
 
-GETting a block from `/files/{filename}/blocks/{block_number}/content` downloads it from the `datanode`. 
+GETting a block from `/files/{filename}/blocks/{block_number}/content` downloads it from the `datanode`.
 
 For example, to download the block `0` of a file named `myfile.jpg` from the `datanode` with address `localhost:8001`, the `client` must send a request to `GET http://localhost:8001/files/myfile.jpg/blocks/0/content`.
 
-
 # Additional exercises
 
-You can earn an additional 2 marks (over 10) on this project's grade by working on additional exercises. To earn the full +2, you need to complete 4 additional exercises. 
+You can earn an additional 2 marks (over 10) on this project's grade by working on additional exercises. To earn the full +2, you need to complete 4 additional exercises.
 
 ### [AD0Q0] Build a unified client with click
 
 Use the [click](https://click.palletsprojects.com/en/8.1.x/) library to create a unified client with different commands for: `upload`, `download` and `info`.
 
-
 ### [AD0Q1] Writing one automated test
 
 Use [pytest](https://docs.pytest.org/en/8.2.x/) to create one automated test that checks we can upload and download files from SSHDFS. Compare the checksums of the file to verify the downloaded file is intact.
 
-
 ### [AD0Q2] Reporting block status to namenode
 
 Use [rocketry](https://rocketry.readthedocs.io/en/stable/cookbook/fastapi.html) to report the blocks that each `datanode` has every 30 seconds to the `namenode`:
+
 - Add an endpoint in the API of the `namenode` that allows removing a file.
 - Add an endpoint in the API of the `namenode` to receive the block reports.
 - The `datanode` should then copy all blocks that have been indicated for addition by the `namenode` from another datanode that has a replica.
 
-
 ### [AD0Q3] Implement write pipelines
 
 Instead of having the client PUT each replica to each `datanode` one by one, PUT it only to the first replica. Then, the `datanode` writes it to the next one in the pipeline.
-
 
 ### [AD0Q4] Analyzing parameters
 
@@ -763,20 +772,17 @@ _Depends on: AD0Q2_
 
 Store the block hash next to each block in the `datanode` file system. Every 30 seconds, compute the hash of existing blocks to check if any of the blocks have been corrupted or modified. When a block hash does not match, report it as missing in the block report and retrieve it from a replica in another `datanode` provided in the `namenode` response.
 
-
 ### [AD0Q6] Discuss the namenode implementation
 
 Describe the main issues with the proposed `namenode` implementation and suggest improvements.
-
 
 ### [AD0Q7] Migrate to Docker volumes
 
 Persistent data, such as the `storage` folder in the `datanodes`, should use [Docker volumes](https://docs.docker.com/storage/volumes/). This allows replacing or restarting a `datanode` without loosing the stored data.
 
-Modify the Docker compose file to [use volumes for the `storage` folder](https://docs.docker.com/compose/compose-file/07-volumes/) of `datanodes`. 
+Modify the Docker compose file to [use volumes for the `storage` folder](https://docs.docker.com/compose/compose-file/07-volumes/) of `datanodes`.
 
 Modify the Docker compose file to [use volumes for the `files.json` file](https://docs.docker.com/compose/compose-file/07-volumes/) of the `namenode`.
-
 
 ### [AD0Q8] Introduce a datanode id
 
@@ -788,16 +794,13 @@ The simple block placement strategy we use (always start with the first `datanod
 
 Design a block (and replica) placement strategy that considers how many blocks each `datanode` already has, such that blocks are distributed uniformly. Explain and implement the improved placement strategy in `namenode`.
 
-
 ### [AD0Q10] Extend the client to check for file integrity
 
 Extend the `upload.py` client to also send the hash of the file. Then, store the file hash in the `files.json` and expose it in the `namenode` API. Finally, when the `download.py` client retrieves all the blocks and reconstructs the file, check that the hash matches the expected one. If the hash does not match (e.g. a block was corrupted), print an error.
 
-
 ### [AD0Q11] Implement a mechanism for AuthN
 
 Implement a mechanism that only allows clients with a valid token to create files, upload and download files. This should be similar to the HDFS block token, but using JWTs instead.
-
 
 ### [AD0Q12] Implement a mechanism for AuthZ
 
