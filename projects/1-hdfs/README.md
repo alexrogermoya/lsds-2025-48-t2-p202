@@ -204,6 +204,10 @@ Then, implement the first endpoint of the `namenode` API: [GET /datanodes](#get-
 
 Test it works with curl and paste a screenshot.
 
+The following screenshot demonstrates the output of the curl command for the GET request to /datanodes, successfully returning the list of configured datanodes as specified in the config.json file:
+
+![screenshoot L1Q0-1](./images/L1Q0/L1Q0-1.png)
+
 ---
 
 ### [L1Q1] [15 marks] POST /files
