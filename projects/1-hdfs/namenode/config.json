@@ -1,7 +1,18 @@
 {
     "datanodes": [
-        "datanode1",
-        "datanode2",
-        "datanode3"
-    ]
+        {
+            "host": "datanode1",
+            "port": 8001
+        },
+        {
+            "host": "datanode2",
+            "port": 8002
+        },
+        {
+            "host": "datanode3",
+            "port": 8003
+        }
+    ],
+    "replication_factor": 2,
+    "block_size": 1000000
 }
