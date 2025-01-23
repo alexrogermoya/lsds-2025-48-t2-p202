@@ -31,14 +31,19 @@ Remember you must format your code with black and follow PEP8 conventions.
 > Answer each question briefly (at most, 2 sentences per question).
 
 **[1 mark] What is the difference between a server and a service?**
+A server is the hardware that hosts and processes requests, and a service is the functionality or application running on the server.
 
 **[1 mark] What is the difference between horizontal and vertical scaling?**
+Horizontal scaling adds more servers, while vertical scaling upgrades the resources of an existing server.
 
 **[1 mark] What does availability mean?**
+Availability refers to the percentage of time a system or service is operational and accessible to users.
 
 **[1 mark] What does durability mean?**
+Durability refers to the ability of a system to reliably store and preserve data over time without loss or corruption.
 
 **[1 mark] To improve the availability of a service, would you recommend vertical or horizontal scaling?**
+Horizontal scaling, as it reduces the risk of a single point of failure by distributing the load across multiple servers.
 
 ---
 
