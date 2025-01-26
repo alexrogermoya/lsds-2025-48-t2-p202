@@ -1,5 +1,6 @@
 import json
 from fastapi import FastAPI
+from fastapi import HTTPException
 from pydantic import BaseModel
 
 # Data model for the POST /files request
@@ -64,3 +65,11 @@ def create_file(file: FileRequest):
 
     # Return the response to the client with block and replica details
     return {"file_name": file_name, "size": size, "blocks": blocks}
+
+# Endpoint to retrieve the available datanodes
+@app.get("/files/{filename}")
+def get_file_metadata(filename: str):
+    if filename in files_data:
+        return files_data[filename]
+    else:
+        raise HTTPException(status_code=404, detail="File not found")

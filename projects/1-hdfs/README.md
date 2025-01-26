@@ -251,6 +251,13 @@ Test it works with curl and paste a screenshot.
 
 Make sure you return a 404 if the file is not found in `files.json`.
 
+The first screenshot demonstrates the output of the curl command for the GET request to /files, successfully retrieving the metadata of the requested file (myfile.jpg) along with its block and replica information. The second screenshot shows the error response when attempting to retrieve a file that doesn't exist in the namenode, returning a "File Not Found" error (404 status).
+
+![screenshoot L1Q2-1](./images/L1Q2/L1Q2-1.png)
+
+![screenshoot L1Q2-2](./images/L1Q2/L1Q2-2.png)
+
+
 ---
 
 ### [L1Q3] [5 marks] Deploying the namenode using docker-compose
