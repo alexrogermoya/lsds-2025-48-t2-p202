@@ -231,6 +231,14 @@ When a new file is created, you must return the number of blocks and the datanod
 
 Test it works with curl and paste a screenshot. Verify the new file is also stored to `files.json` and paste a screenshot.
 
+The first screenshot demonstrates the output of the curl command for the POST request to /files, successfully creating a new file and returning its block and replica information in the response. The second screenshot shows the updated content of files.json, verifying that the new file has been correctly stored in the namenode's metadata file.
+
+![screenshoot L1Q1-1](./images/L1Q1/L1Q1-1.png)
+
+![screenshoot L1Q1-2](./images/L1Q1/L1Q1-2.png)
+
+Note: To test the functionality, we set the block_size to 100 bytes. This choice allows us to easily verify the block and replica placement logic with smaller file sizes, ensuring that each block is correctly assigned to the datanodes and replicated according to the system's configuration. In this case, the file size (295 bytes) is small enough to be divided into a manageable number of blocks, making it easier to observe the behavior of the system during testing.
+
 ---
 
 ### [L1Q2] [10 marks] GET /files/{filename}

@@ -1,1 +1,50 @@
-{}
+{
+  "myfile.jpg": {
+    "file_name": "myfile.jpg",
+    "size": 295,
+    "blocks": [
+      {
+        "number": 0,
+        "size": 100,
+        "replicas": [
+          {
+            "host": "datanode1",
+            "port": 8001
+          },
+          {
+            "host": "datanode2",
+            "port": 8002
+          }
+        ]
+      },
+      {
+        "number": 1,
+        "size": 100,
+        "replicas": [
+          {
+            "host": "datanode2",
+            "port": 8002
+          },
+          {
+            "host": "datanode3",
+            "port": 8003
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "size": 95,
+        "replicas": [
+          {
+            "host": "datanode3",
+            "port": 8003
+          },
+          {
+            "host": "datanode1",
+            "port": 8001
+          }
+        ]
+      }
+    ]
+  }
+}
