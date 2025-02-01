@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi.responses import FileResponse
 from pathlib import Path
 
 app = FastAPI()
@@ -19,3 +20,15 @@ async def upload_block(filename: str, block_number: int, file: UploadFile = File
         f.write(await file.read())
 
     return {"message": f"Block {block_number} of {filename} stored successfully"}
+
+@app.get("/files/{filename}/blocks/{block_number}/content")
+def get_block(filename: str, block_number: int):
+    # Path of the block inside the storage folder
+    block_path = STORAGE_DIR / filename / str(block_number)
+
+    # Check if the file exists
+    if not block_path.exists():
+        raise HTTPException(status_code=404, detail="Block not found")
+
+    # Return the file as the response
+    return FileResponse(block_path, media_type="application/octet-stream")
