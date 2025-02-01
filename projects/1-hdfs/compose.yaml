@@ -3,3 +3,8 @@ services:
     build: namenode
     ports:
       - "8000:8000"
+
+  datanode:
+    build: ./datanode
+    ports:
+      - "8001:8001"
