@@ -321,6 +321,12 @@ Implement the [PUT /files/{filename}/blocks/{block_number}/content](#put-filesfi
 
 Test you can upload a file as if it were a single block with curl: `curl -F "file=@./test_files/cat.jpg" -X PUT localhost:8001/files/cat.jpg/blocks/0/content`. Paste a screenshot of putting a block to the datanode with curl and how it is stored in the filesystem inside the container (using the `Files` tab in `Docker Desktop`).
 
+The first screenshot demonstrates the execution of the curl command to upload a block to the datanode, confirming that the PUT request works as expected. The second screenshot shows in Docker Desktop that the uploaded block has been successfully stored in the datanode’s filesystem.
+
+![screenshoot L2Q0-1](./images/L2Q0/L2Q0-1.png)
+
+![screenshoot L2Q0-2](./images/L2Q0/L2Q0-2.png)
+
 ---
 
 ### [L2Q1] [10 marks] GET /files/{filename}/blocks/{block_number}/content
