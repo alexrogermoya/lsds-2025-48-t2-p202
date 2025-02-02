@@ -338,6 +338,12 @@ Implement the [GET /files/{filename}/blocks/{block_number}/content](#get-filesfi
 
 Test you can download the cat image we uploaded before with curl: `curl -o downloaded-cat.jpg -X GET localhost:8001/files/cat.jpg/blocks/0/content`. Paste a screenshot and verify the downloaded image is fine.
 
+The first screenshot demonstrates the execution of the curl command to download the block, confirming that the GET request works as expected. The second screenshot shows the downloaded image, verifying that it was retrieved correctly from the datanode’s storage.
+
+![screenshoot L2Q1-1](./images/L2Q1/L2Q1-1.png)
+
+![screenshoot L2Q1-2](./images/L2Q1/L2Q1-2.png)
+
 ---
 
 ### [L2Q2] [5 marks]. Deploying the datanode with docker compose
