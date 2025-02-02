@@ -352,6 +352,14 @@ Modify the `compose.yaml` file to also create 3 `datanodes` services at ports 80
 
 Test you can upload and download the cat image when the service runs in Docker. Paste a screenshot and verify the downloaded image is fine.
 
+The first screenshot shows the output of the docker ps command, confirming that the namenode and three datanodes are running as expected in Docker. The second screenshot displays the execution of curl commands to upload (PUT) and retrieve (GET) the cat image, verifying that the datanode services are functioning correctly in Docker. The third screenshot presents the Docker Desktop interface, showing the active containers for the namenode and three datanodes, along with their assigned ports.
+
+![screenshoot L2Q2-1](./images/L2Q2/L2Q2-1.png)
+
+![screenshoot L2Q2-2](./images/L2Q2/L2Q2-2.png)
+
+![screenshoot L2Q2-3](./images/L2Q2/L2Q2-3.png)
+
 ---
 
 ## Seminar 2: Building a Python client
