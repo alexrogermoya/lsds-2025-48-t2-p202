@@ -23,7 +23,7 @@ if response.status_code != 200:
     exit(1)
 
 file_metadata = response.json()  # Obtain file metadata (blocks and replicas) 
-block_size = 100  # Define block size
+block_size = 1000000
 
 # Read the file and upload blocks
 with open(file_path, "rb") as f:
@@ -31,7 +31,7 @@ with open(file_path, "rb") as f:
         block_data = f.read(block["size"]) 
 
         for replica in block["replicas"]:
-            datanode_url = f"http://{replica['host']}:{replica['port']}/files/{filename}/blocks/{block['number']}/content"
+            datanode_url = f"http://localhost:{replica['port']}/files/{filename}/blocks/{block['number']}/content"
             response = requests.put(datanode_url, files={"file": block_data})
 
             if response.status_code == 200:

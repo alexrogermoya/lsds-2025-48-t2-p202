@@ -32,3 +32,7 @@ def get_block(filename: str, block_number: int):
 
     # Return the file as the response
     return FileResponse(block_path, media_type="application/octet-stream")
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
