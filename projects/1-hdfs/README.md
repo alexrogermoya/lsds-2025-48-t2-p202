@@ -280,6 +280,10 @@ Test you can create a file and get a file with curl and paste a screenshot.
 
 Also, paste a screenshot of the content of the `files.json` file using the `Files` tab in `Docker Desktop` to explore the files inside the container.
 
+The next screenshoot demonstrates the content of the files.json file inside the container, accessed through the Files tab in Docker Desktop. This verifies that the file metadata has been correctly stored within the namenode.
+
+![screenshoot L1Q3-1](./images/L1Q3/L1Q3-1.png)
+
 ---
 
 ## Lab 2: Building the datanode
