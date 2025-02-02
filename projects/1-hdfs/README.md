@@ -411,11 +411,13 @@ Create a new Python script `projects\1-hdfs\client\upload.py` that asks the user
 
 Run the `upload.py` script and paste a screenshot of the result and how the blocks are stored in the different `datanodes` (inside Docker).
 
-The first screenshot shows the successful execution of the upload.py script, where blocks of the file are uploaded to the assigned datanodes. The second screenshot shows the Docker logs from the Namenode and Datanodes, confirming the successful upload of file blocks to the different datanodes.
+The first screenshot shows the successful execution of the upload.py script, where blocks of the file are uploaded to the assigned datanodes. The second screenshot shows the Docker logs from the Namenode and Datanodes, confirming the successful upload of file blocks to the different datanodes. The last screenshoot confirms that blocks 0 and 2 are inside datanode 1.  
 
 ![screenshoot S2Q1-1](./images/S2Q1/S2Q1-1.png)
 
 ![screenshoot S2Q1-2](./images/S2Q1/S2Q1-2.png)
+
+![screenshoot S2Q1-3](./images/S2Q1/S2Q1-3.png)
 
 ---
 
