@@ -4,7 +4,8 @@ from pathlib import Path
 
 app = FastAPI()
 
-STORAGE_DIR = Path("storage") # Folder where the blocks will be stored
+STORAGE_DIR = Path("storage")  # Folder where the blocks will be stored
+
 
 @app.put("/files/{filename}/blocks/{block_number}/content")
 async def upload_block(filename: str, block_number: int, file: UploadFile = File(...)):
@@ -21,6 +22,7 @@ async def upload_block(filename: str, block_number: int, file: UploadFile = File
 
     return {"message": f"Block {block_number} of {filename} stored successfully"}
 
+
 @app.get("/files/{filename}/blocks/{block_number}/content")
 def get_block(filename: str, block_number: int):
     # Path of the block inside the storage folder
@@ -32,6 +34,7 @@ def get_block(filename: str, block_number: int):
 
     # Return the file as the response
     return FileResponse(block_path, media_type="application/octet-stream")
+
 
 @app.get("/health")
 def health_check():

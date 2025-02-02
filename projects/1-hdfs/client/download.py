@@ -1,7 +1,7 @@
 import requests
 from pathlib import Path
 
-# Ask the user for the filename and for the destination path using input 
+# Ask the user for the filename and for the destination path using input
 filename = input("Enter the filename to download: ").strip()
 destination_path = Path(input("Enter the destination path: ").strip())
 
@@ -10,7 +10,7 @@ if not destination_path.parent.exists():
     print("Error: Destination directory does not exist.")
     exit(1)
 
-# # Obtain file metadata from the namenode 
+# # Obtain file metadata from the namenode
 namenode_url = f"http://localhost:8000/files/{filename}"
 response = requests.get(namenode_url)
 
@@ -21,7 +21,7 @@ if response.status_code != 200:
 file_metadata = response.json()
 blocks = file_metadata["blocks"]
 
-# Create the file at the destination path 
+# Create the file at the destination path
 with open(destination_path, "wb") as f:
     for block in blocks:
         for replica in block["replicas"]:
@@ -30,7 +30,9 @@ with open(destination_path, "wb") as f:
 
             if block_data:
                 f.write(block_data)
-                print(f"Block {block['number']} downloaded from {replica['host']}:{replica['port']}")
+                print(
+                    f"Block {block['number']} downloaded from {replica['host']}:{replica['port']}"
+                )
                 break
         else:
             print(f"Error downloading block {block['number']}. No replicas available.")

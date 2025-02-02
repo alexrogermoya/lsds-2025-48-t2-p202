@@ -3,26 +3,30 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from pydantic import BaseModel
 
+
 # Data model for the POST /files request
 class FileRequest(BaseModel):
     file_name: str
     size: int
 
+
 # Initialize the FastAPI application
 app = FastAPI()
 
-# Load configuration from config.json 
+# Load configuration from config.json
 with open("config.json") as f:
     config = json.load(f)
 
-# Load file metadata from files.json 
+# Load file metadata from files.json
 with open("files.json") as f:
     files_data = json.load(f)
+
 
 # Endpoint to retrieve the available datanodes
 @app.get("/datanodes")
 def get_datanodes():
     return {"datanodes": config["datanodes"]}
+
 
 # Endpoint to create a new file in the system
 @app.post("/files")
@@ -37,7 +41,11 @@ def create_file(file: FileRequest):
     # Loop through all blocks and assign datanodes and replicas
     for block_num in range(num_blocks):
         # Determine the size of the current block (the last block may be smaller)
-        block_size = config["block_size"] if block_num < num_blocks - 1 else size % config["block_size"]
+        block_size = (
+            config["block_size"]
+            if block_num < num_blocks - 1
+            else size % config["block_size"]
+        )
         block_replicas = []
 
         # Assign replicas to datanodes using the modulo-based placement policy
@@ -46,18 +54,12 @@ def create_file(file: FileRequest):
             block_replicas.append(config["datanodes"][datanode_index])
 
         # Add the block with its number, size, and replicas to the block list
-        blocks.append({
-            "number": block_num,
-            "size": block_size,
-            "replicas": block_replicas
-        })
+        blocks.append(
+            {"number": block_num, "size": block_size, "replicas": block_replicas}
+        )
 
     # Add the file's metadata to files.json
-    files_data[file_name] = {
-        "file_name": file_name,
-        "size": size,
-        "blocks": blocks
-    }
+    files_data[file_name] = {"file_name": file_name, "size": size, "blocks": blocks}
 
     # Write the updated file metadata to files.json
     with open("files.json", "w") as f:
@@ -65,6 +67,7 @@ def create_file(file: FileRequest):
 
     # Return the response to the client with block and replica details
     return {"file_name": file_name, "size": size, "blocks": blocks}
+
 
 # Endpoint to retrieve the available datanodes
 @app.get("/files/{filename}")
