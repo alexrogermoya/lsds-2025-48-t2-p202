@@ -378,6 +378,10 @@ Create a new Python script `projects\1-hdfs\client\list_datanodes.py` that retri
 
 Run the `list_datanodes.py` script and paste a screenshot of the result.
 
+The screenshot shows the execution of python list_datanodes.py in the terminal, demonstrating that the script successfully retrieves the list of datanodes.
+
+![screenshoot S2Q0-1](./images/S2Q0/S2Q0-1.png)
+
 ---
 
 ### [S2Q1] [10 marks] Upload a file
