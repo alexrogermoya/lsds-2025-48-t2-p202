@@ -209,7 +209,7 @@ Then, implement the first endpoint of the `namenode` API: [GET /datanodes](#get-
 
 Test it works with curl and paste a screenshot.
 
-The following screenshot demonstrates the output of the curl command for the GET request to /datanodes, successfully returning the list of configured datanodes as specified in the config.json file:
+**The following screenshot demonstrates the output of the curl command for the GET request to /datanodes, successfully returning the list of configured datanodes as specified in the config.json file:**
 
 ![screenshoot L1Q0-1](./images/L1Q0/L1Q0-1.png)
 
@@ -231,13 +231,13 @@ When a new file is created, you must return the number of blocks and the datanod
 
 Test it works with curl and paste a screenshot. Verify the new file is also stored to `files.json` and paste a screenshot.
 
-The first screenshot demonstrates the output of the curl command for the POST request to /files, successfully creating a new file and returning its block and replica information in the response. The second screenshot shows the updated content of files.json, verifying that the new file has been correctly stored in the namenode's metadata file.
+**The first screenshot demonstrates the output of the curl command for the POST request to /files, successfully creating a new file and returning its block and replica information in the response. The second screenshot shows the updated content of files.json, verifying that the new file has been correctly stored in the namenode's metadata file.**
 
 ![screenshoot L1Q1-1](./images/L1Q1/L1Q1-1.png)
 
 ![screenshoot L1Q1-2](./images/L1Q1/L1Q1-2.png)
 
-Note: To test the functionality, we set the block_size to 100 bytes. This choice allows us to easily verify the block and replica placement logic with smaller file sizes, ensuring that each block is correctly assigned to the datanodes and replicated according to the system's configuration. In this case, the file size (295 bytes) is small enough to be divided into a manageable number of blocks, making it easier to observe the behavior of the system during testing.
+**Note: To test the functionality, we set the block_size to 100 bytes. This choice allows us to easily verify the block and replica placement logic with smaller file sizes, ensuring that each block is correctly assigned to the datanodes and replicated according to the system's configuration. In this case, the file size (295 bytes) is small enough to be divided into a manageable number of blocks, making it easier to observe the behavior of the system during testing.**
 
 ---
 
@@ -251,7 +251,7 @@ Test it works with curl and paste a screenshot.
 
 Make sure you return a 404 if the file is not found in `files.json`.
 
-The first screenshot demonstrates the output of the curl command for the GET request to /files, successfully retrieving the metadata of the requested file (myfile.jpg) along with its block and replica information. The second screenshot shows the error response when attempting to retrieve a file that doesn't exist in the namenode, returning a "File Not Found" error (404 status).
+**The first screenshot demonstrates the output of the curl command for the GET request to /files, successfully retrieving the metadata of the requested file (myfile.jpg) along with its block and replica information. The second screenshot shows the error response when attempting to retrieve a file that doesn't exist in the namenode, returning a "File Not Found" error (404 status).**
 
 ![screenshoot L1Q2-1](./images/L1Q2/L1Q2-1.png)
 
@@ -280,7 +280,7 @@ Test you can create a file and get a file with curl and paste a screenshot.
 
 Also, paste a screenshot of the content of the `files.json` file using the `Files` tab in `Docker Desktop` to explore the files inside the container.
 
-The next screenshoot demonstrates the content of the files.json file inside the container, accessed through the Files tab in Docker Desktop. This verifies that the file metadata has been correctly stored within the namenode.
+**The next screenshoot demonstrates the content of the files.json file inside the container, accessed through the Files tab in Docker Desktop. This verifies that the file metadata has been correctly stored within the namenode.**
 
 ![screenshoot L1Q3-1](./images/L1Q3/L1Q3-1.png)
 
@@ -321,7 +321,7 @@ Implement the [PUT /files/{filename}/blocks/{block_number}/content](#put-filesfi
 
 Test you can upload a file as if it were a single block with curl: `curl -F "file=@./test_files/cat.jpg" -X PUT localhost:8001/files/cat.jpg/blocks/0/content`. Paste a screenshot of putting a block to the datanode with curl and how it is stored in the filesystem inside the container (using the `Files` tab in `Docker Desktop`).
 
-The first screenshot demonstrates the execution of the curl command to upload a block to the datanode, confirming that the PUT request works as expected. The second screenshot shows in Docker Desktop that the uploaded block has been successfully stored in the datanode’s filesystem.
+**The first screenshot demonstrates the execution of the curl command to upload a block to the datanode, confirming that the PUT request works as expected. The second screenshot shows in Docker Desktop that the uploaded block has been successfully stored in the datanode’s filesystem.**
 
 ![screenshoot L2Q0-1](./images/L2Q0/L2Q0-1.png)
 
@@ -338,7 +338,7 @@ Implement the [GET /files/{filename}/blocks/{block_number}/content](#get-filesfi
 
 Test you can download the cat image we uploaded before with curl: `curl -o downloaded-cat.jpg -X GET localhost:8001/files/cat.jpg/blocks/0/content`. Paste a screenshot and verify the downloaded image is fine.
 
-The first screenshot demonstrates the execution of the curl command to download the block, confirming that the GET request works as expected. The second screenshot shows the downloaded image, verifying that it was retrieved correctly from the datanode’s storage.
+**The first screenshot demonstrates the execution of the curl command to download the block, confirming that the GET request works as expected. The second screenshot shows the downloaded image, verifying that it was retrieved correctly from the datanode’s storage.**
 
 ![screenshoot L2Q1-1](./images/L2Q1/L2Q1-1.png)
 
@@ -352,7 +352,7 @@ Modify the `compose.yaml` file to also create 3 `datanodes` services at ports 80
 
 Test you can upload and download the cat image when the service runs in Docker. Paste a screenshot and verify the downloaded image is fine.
 
-The first screenshot shows the output of the docker ps command, confirming that the namenode and three datanodes are running as expected in Docker. The second screenshot displays the execution of curl commands to upload (PUT) and retrieve (GET) the cat image, verifying that the datanode services are functioning correctly in Docker. The third screenshot presents the Docker Desktop interface, showing the active containers for the namenode and three datanodes, along with their assigned ports.
+**The first screenshot shows the output of the docker ps command, confirming that the namenode and three datanodes are running as expected in Docker. The second screenshot displays the execution of curl commands to upload (PUT) and retrieve (GET) the cat image, verifying that the datanode services are functioning correctly in Docker. The third screenshot presents the Docker Desktop interface, showing the active containers for the namenode and three datanodes, along with their assigned ports.**
 
 ![screenshoot L2Q2-1](./images/L2Q2/L2Q2-1.png)
 
@@ -378,7 +378,7 @@ Create a new Python script `projects\1-hdfs\client\list_datanodes.py` that retri
 
 Run the `list_datanodes.py` script and paste a screenshot of the result.
 
-The screenshot shows the execution of python list_datanodes.py in the terminal, demonstrating that the script successfully retrieves the list of datanodes.
+**The screenshot shows the execution of python list_datanodes.py in the terminal, demonstrating that the script successfully retrieves the list of datanodes.**
 
 ![screenshoot S2Q0-1](./images/S2Q0/S2Q0-1.png)
 
@@ -411,7 +411,7 @@ Create a new Python script `projects\1-hdfs\client\upload.py` that asks the user
 
 Run the `upload.py` script and paste a screenshot of the result and how the blocks are stored in the different `datanodes` (inside Docker).
 
-The first screenshot shows the successful execution of the upload.py script, where blocks of the file are uploaded to the assigned datanodes. The second screenshot shows the Docker logs from the Namenode and Datanodes, confirming the successful upload of file blocks to the different datanodes. The last screenshoot confirms that blocks 0 and 2 are inside datanode 1.  
+**The first screenshot shows the successful execution of the upload.py script, where blocks of the file are uploaded to the assigned datanodes. The second screenshot shows the Docker logs from the Namenode and Datanodes, confirming the successful upload of file blocks to the different datanodes. The last screenshoot confirms that blocks 0 and 2 are inside datanode 1.**
 
 ![screenshoot S2Q1-1](./images/S2Q1/S2Q1-1.png)
 
@@ -439,6 +439,12 @@ Create a new Python script `projects\1-hdfs\client\download.py` that asks the us
 > ```
 
 Run the `upload.py` and `download.py` scripts. Paste a screenshot of how you can upload and download files.
+
+**The first screenshot shows the successful execution of the download.py script, where the file 'cat_s2q1.jpg' is downloaded from the datanodes to the specified destination path. The second screenshot shows the Docker logs from the Namenode and Datanodes, confirming the successful retrieval of file blocks from the datanodes during the download process.**
+
+![screenshoot S2Q2-1](./images/S2Q2/S2Q2-1.png)
+
+![screenshoot S2Q2-2](./images/S2Q2/S2Q2-2.png)
 
 ---
 
