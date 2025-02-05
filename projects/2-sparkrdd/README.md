@@ -83,6 +83,10 @@ The file [numbers2.txt](./data/numbers2.txt) has many lines, each with many numb
 - Implement and run a Spark job that computes the sum of all the even numbers.
 - Write the command you used to run it in the README and show a screenshot of the result.
 
+The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum3.py /opt/bitnami/spark/app/data/numbers2.txt`
+
+![screenshoot S3Q2](./images/S3Q2/S3Q2.png)
+
 ### [S3Q3] [5 marks] Find how many people live in each city
 
 The file [people.txt](./data/people.txt) has many lines, each with `{NAME} {LANGUAGE} {CITY}`.
