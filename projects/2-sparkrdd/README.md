@@ -73,7 +73,7 @@ The file [numbers2.txt](./data/numbers2.txt) has many lines, each with many numb
 
 The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum2.py /opt/bitnami/spark/app/data/numbers2.txt`
 
-![screenshoot S3Q0-2](./images//S3Q1/S3Q1-1.png)
+![screenshoot S3Q1](./images/S3Q1/S3Q1-1.png)
 
 ### [S3Q2] [5 marks] Sum the even numbers
 
