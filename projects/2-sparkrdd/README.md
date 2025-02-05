@@ -5,23 +5,10 @@ The goal of this lab is to use Spark RDDs to analyze a large volume of Tweets in
 # Table of contents
 
 - [Required exercises](#required-exercises)
-<<<<<<< Updated upstream
-    - [Seminar 3: Using Spark RDDs](#seminar-3-using-spark-rdds)
-    - [Lab 3: Downloading Tweets and parsing them from JSON](#lab-3-downloading-tweets-from-s3-and-parsing-them-from-json)
-    - [Lab 4: Analyzing Tweets with Spark](#lab-4-analyzing-tweets-with-spark)
-    - [Seminar 4: Running Spark in AWS](#seminar-4-running-spark-in-aws)
-=======
-  <<<<<<< HEAD
   - [Seminar 3: Using Spark RDDs](#seminar-3-using-spark-rdds)
   - [Lab 3: Downloading Tweets and parsing them from JSON](#lab-3-downloading-tweets-from-s3-and-parsing-them-from-json)
   - [Lab 4: Analyzing Tweets with Spark](#lab-4-analyzing-tweets-with-spark)
-  - # [Seminar 4: Running Spark in AWS](#seminar-4-running-spark-in-aws)
-        - [Seminar 3: Using Spark RDDs](#seminar-3-using-spark-rdds)
-        - [Lab 3: Downloading Tweets and parsing them from JSON](#lab-3-downloading-tweets-from-s3-and-parsing-them-from-json)
-        - [Lab 4: Analyzing Tweets with Spark](#lab-4-analyzing-tweets-with-spark)
-        - [Seminar 4: Running Spark in AWS](#seminar-4-running-spark-in-aws)
-    > > > > > > > 7996025e8271282f8181c705eaf72676066c65de
->>>>>>> Stashed changes
+  - [Seminar 4: Running Spark in AWS](#seminar-4-running-spark-in-aws)
 - [Additional exercises](#additional-exercises)
 
 # Required exercises
@@ -37,41 +24,17 @@ Remember you must format your code with black and follow PEP8 conventions.
 
 ### [S3Q0] [10 marks] What is Spark RDD?
 
-<<<<<<< Updated upstream
-- **[1 mark]** What is the difference between a transformation and an action? 
-
-**A transformation is a lazy operation on an RDD that produces another RDD (e.g., map(), filter()), while an action triggers execution and returns a value (e.g., collect(), reduce()).**
-
-- **[1 mark]** What is the difference between a wide and a narrow dependency? What is a stage in Spark RDD? 
-=======
-<<<<<<< HEAD
-
-- **[1 mark]** What is the difference between a transformation and an action?
-
-**A transformation is a lazy operation on an RDD that produces another RDD (e.g., map(), filter()), while an action triggers execution and returns a value (e.g., collect(), reduce()).**
-
-- # **[1 mark]** What is the difference between a wide and a narrow dependency? What is a stage in Spark RDD?
 - **[1 mark]** What is the difference between a transformation and an action?
 
 **A transformation is a lazy operation on an RDD that produces another RDD (e.g., map(), filter()), while an action triggers execution and returns a value (e.g., collect(), reduce()).**
 
 - **[1 mark]** What is the difference between a wide and a narrow dependency? What is a stage in Spark RDD?
-  > > > > > > > 7996025e8271282f8181c705eaf72676066c65de
->>>>>>> Stashed changes
 
 **A narrow dependency occurs when each partition of the parent RDD maps to one partition of the child RDD. A wide dependency occurs when multiple partitions of the parent RDD are shuffled to form one partition in the child RDD. A stage is a set of transformations with narrow dependencies.**
 
 Start up a Spark cluster locally using Docker compose: `docker-compose up`.
 
-<<<<<<< Updated upstream
-- **[1 mark]** How many Spark workers exist in your local cluster? Take a screenshot of Docker Desktop and add it to the README. 
-=======
-<<<<<<< HEAD
-
-- # **[1 mark]** How many Spark workers exist in your local cluster? Take a screenshot of Docker Desktop and add it to the README.
 - **[1 mark]** How many Spark workers exist in your local cluster? Take a screenshot of Docker Desktop and add it to the README.
-  > > > > > > > 7996025e8271282f8181c705eaf72676066c65de
->>>>>>> Stashed changes
 
 **There exist 2 Spark workers in our local cluster. The next screenshoot shows the spark master and the 2 workers at Docker Desktop:**
 
@@ -94,22 +57,13 @@ Start up a Spark cluster locally using Docker compose: `docker-compose up`.
 - Check the local IP for the Spark Master service in the `spark-master-1` container logs. You should see a log similar to `Starting Spark master at spark://172.20.0.2:7077`.
 - Run the job with Spark: `docker-compose exec spark-master spark-submit --master spark://{IP_FROM_PREVIOUS_STEP}:7077 /opt/bitnami/spark/app/spark_sum.py /opt/bitnami/spark/app/data/numbers1.txt`
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 - **[1 mark]** Take a close look at the logs. What was the result of your job?
 
 **The result of the job is printed towards the end of the logs: SUM = 55. Here is the screenshoot:**
 
 ![screenshoot S3Q0-2](./images/S3Q0-2.png)
 
-<<<<<<< Updated upstream
-
-### [S3Q1] [5 marks]  Sum the numbers
-=======
 ### [S3Q1] [5 marks] Sum the numbers
->>>>>>> Stashed changes
 
 The file [numbers2.txt](./data/numbers2.txt) has many lines, each with many numbers.
 
@@ -117,9 +71,9 @@ The file [numbers2.txt](./data/numbers2.txt) has many lines, each with many numb
 - Implement and run a Spark job that computes the sum of all the numbers.
 - Write the command you used to run it in the README and show a screenshot of the result.
 
-The command used to run it is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum2.py /opt/bitnami/spark/app/data/numbers2.txt`
+The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum2.py /opt/bitnami/spark/app/data/numbers2.txt`
 
-![screenshoot S3Q1-1](./images//S3Q1/S3Q1-1.png)
+![screenshoot S3Q0-2](./images//S3Q1/S3Q1-1.png)
 
 ### [S3Q2] [5 marks] Sum the even numbers
 
@@ -161,7 +115,7 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 ### [L3Q1] [5 marks] Parsing JSON with Python
 
 - Create a file `tweet_parser.py`
-- Create a `Tweet` dataclass with fields for the `tweet_id` (int), `text` (str), `user_id` (int), `user_name` (str), `language` (str), `timestamp_ms` (int), `retweeted_id` (int, the id of the retweeted tweet or None) and `retweeted_user_id` (int, the id of the retweeted tweet's user or None). [Help](https://realpython.com/python-data-classes/)
+- Create a `Tweet` dataclass with fields for the `tweet_id` (int), `text` (str), `user_id` (int), `user_name` (str), `language` (str), `timestamp_ms` (int) and `retweet_count` (int). [Help](https://realpython.com/python-data-classes/)
 - Create a function `parse_tweet(tweet: str) -> Tweet` that takes in a Tweet as a Json string and returns a Tweet object. [Help](https://stackoverflow.com/a/7771071)
 - Read the first line of `Eurovision3.json` and print the result of `parse_tweet`. [Help](https://stackoverflow.com/questions/1904394/read-only-the-first-line-of-a-file)
 - Take a screenshot and add it to the README.
@@ -170,11 +124,7 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 
 - Create a file `simple_tweet_language_counter.py`
 - Implement a script that reads each line of `Eurovision3.json` one by one. [Help](https://stackoverflow.com/a/3277512)
-<<<<<<< Updated upstream
-    - You might need to skip any invalid lines, such as empty lines with only a `\n` or Tweets with an invalid JSON format.
-=======
-- You might need to skip any invalid lines, such as empty lines with only a `\n` or Tweets with an invalid JSON format.
->>>>>>> Stashed changes
+  - You might need to skip any invalid lines, such as empty lines with only a `\n` or Tweets with an invalid JSON format.
 - Parse each Tweet using the `parse_tweet` function from the previous exercise.
 - Count the number of Tweets of each language using a dictionary. [Help](https://www.w3schools.com/python/python_dictionaries.asp)
 - Print the dictionary. Take a screenshot and add it to the README.
@@ -386,11 +336,4 @@ Some tips:
 
 - Read the inverse index you created with Spark from the file system to know which documents contain any given word.
 - Use set intersections to find the document ids that contain all the query words.
-  <<<<<<< HEAD
-- # Read the files from the file system repository you created in AD1Q1 to find the abstract, uri and title for any given id.
 - Read the files from the file system repository you created in AD1Q1 to find the abstract, uri and title for any given id.
-
-<<<<<<< Updated upstream
-=======
-> > > > > > > 7996025e8271282f8181c705eaf72676066c65de
->>>>>>> Stashed changes

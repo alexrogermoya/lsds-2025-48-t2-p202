@@ -4,7 +4,7 @@ import sys
 
 _, source = sys.argv
 
-conf = SparkConf().setAppName("spark-sum")
+conf = SparkConf().setAppName("spark-sum2")
 sc = SparkContext(conf=conf)
 
 numbers_rdd = sc.textFile(source)
