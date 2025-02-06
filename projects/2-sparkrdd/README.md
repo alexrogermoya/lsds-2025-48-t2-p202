@@ -120,7 +120,7 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 
 - **[1 mark]** What field in the JSON object of a Tweet contains the language?
 
-  The field "lang" in "user"\
+  The field "lang"\
   ![screenshoot L3Q0-2](./images/L3Q0/L3Q0-2.png)
 
 - **[1 mark]** What field in the JSON object of a Tweet contains the text content?
