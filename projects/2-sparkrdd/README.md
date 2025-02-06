@@ -147,6 +147,8 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 - Read the first line of `Eurovision3.json` and print the result of `parse_tweet`. [Help](https://stackoverflow.com/questions/1904394/read-only-the-first-line-of-a-file)
 - Take a screenshot and add it to the README.
 
+![screenshot L3Q1](./images/L3Q1/L3Q1.png)
+
 ### [L3Q2] [5 marks] Counting Tweets by language
 
 - Create a file `simple_tweet_language_counter.py`
