@@ -95,6 +95,10 @@ The file [people.txt](./data/people.txt) has many lines, each with `{NAME} {LANG
 - Implement and run a Spark job that counts how many people live in each city.
 - Write the command you used to run it in the README and show a screenshot of the result.
 
+The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_count_people.py /opt/bitnami/spark/app/data/people.txt`
+
+![screenshoot S3Q3](./images/S3Q3/S3Q3.png)
+
 ### [S3Q4] [5 marks] Count the bigrams
 
 The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
