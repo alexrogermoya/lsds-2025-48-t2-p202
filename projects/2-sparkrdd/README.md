@@ -125,7 +125,7 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 
 - **[1 mark]** What field in the JSON object of a Tweet contains the text content?
 
-  The field "text" in "retweeted_status"\
+  The field "text"\
   ![screenshoot L3Q0-3](./images/L3Q0/L3Q0-3.png)
 
 - **[1 mark]** What field in the JSON object of a Tweet contains the number of followers?
