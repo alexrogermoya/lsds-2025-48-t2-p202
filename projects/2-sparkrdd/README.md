@@ -115,28 +115,28 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 - Take a look at the first Tweet: `cat Eurovision3.json -n | head -n 1 | jq`. [Help](https://unix.stackexchange.com/questions/288521/with-the-linux-cat-command-how-do-i-show-only-certain-lines-by-number#:~:text=cat%20%2Fvar%2Flog%2Fsyslog%20-n%20%7C%20head%20-n%2050%20%7C,-b10%20-a10%20will%20show%20lines%2040%20thru%2060.)
 - **[1 mark]** What field in the JSON object of a Tweet contains the user bio?
 
-The field "description" in "user"
-![screenshoot L3Q0-1](./images/L3Q0/L3Q0-1.png)
+  The field "description" in "user"\
+  ![screenshoot L3Q0-1](./images/L3Q0/L3Q0-1.png)
 
 - **[1 mark]** What field in the JSON object of a Tweet contains the language?
 
-The field "lang" in "user"
-![screenshoot L3Q0-2](./images/L3Q0/L3Q0-2.png)
+  The field "lang" in "user"\
+  ![screenshoot L3Q0-2](./images/L3Q0/L3Q0-2.png)
 
 - **[1 mark]** What field in the JSON object of a Tweet contains the text content?
 
-The field "text" in "retweeted_status"
-![screenshoot L3Q0-3](./images/L3Q0/L3Q0-3.png)
+  The field "text" in "retweeted_status"\
+  ![screenshoot L3Q0-3](./images/L3Q0/L3Q0-3.png)
 
 - **[1 mark]** What field in the JSON object of a Tweet contains the number of followers?
 
-The field "followers_count" in "user"
-![screenshoot L3Q0-4](./images/L3Q0/L3Q0-4.png)
+  The field "followers_count" in "user"\
+  ![screenshoot L3Q0-4](./images/L3Q0/L3Q0-4.png)
 
 - Take a look at the first two lines: `cat Eurovision3.json -n | head -n 2`.
-- **[1 mark]** How many Tweets does each line contain?
-  Each line contains one Tweet
-  ![screenshoot L3Q0-5](./images/L3Q0/L3Q0-5.png)
+- **[1 mark]** How many Tweets does each line contain?\
+  Each line contains one Tweet\
+  ![screenshoot L3Q0-5](./images/L3Q0/L3Q0-5.png)\
   ![screenshoot L3Q0-6](./images/L3Q0/L3Q0-6.png)
 
 ### [L3Q1] [5 marks] Parsing JSON with Python
