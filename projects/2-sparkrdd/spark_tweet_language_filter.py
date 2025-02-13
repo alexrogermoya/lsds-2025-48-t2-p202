@@ -9,7 +9,7 @@ spark = SparkSession.builder \
 def filter_tweets_by_language(input_path, output_path, language):
     tweets_df = spark.read.json(input_path)
     filtered_df = tweets_df.filter(col("lang") == language)
-    filtered_df.write.mode("overwrite").json(output_path)
+    filtered_df.coalesce(1).write.mode("overwrite").json(output_path)
 
 if __name__ == "__main__":
     language = sys.argv[1]
