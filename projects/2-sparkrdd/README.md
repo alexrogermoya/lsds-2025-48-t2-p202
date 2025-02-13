@@ -38,7 +38,7 @@ Start up a Spark cluster locally using Docker compose: `docker-compose up`.
 
 **There exist 2 Spark workers in our local cluster. The next screenshoot shows the spark master and the 2 workers at Docker Desktop:**
 
-![screenshoot S3Q0-1](./images/S3Q0-1.png)
+![screenshoot S3Q0-1](./images/S3Q0/S3Q0-1.png)
 
 - **[3 mark]** What is a lambda function in Python?
 
@@ -61,7 +61,7 @@ Start up a Spark cluster locally using Docker compose: `docker-compose up`.
 
 **The result of the job is printed towards the end of the logs: SUM = 55. Here is the screenshoot:**
 
-![screenshoot S3Q0-2](./images/S3Q0-2.png)
+![screenshoot S3Q0-2](./images/S3Q0/S3Q0-2.png)
 
 ### [S3Q1] [5 marks] Sum the numbers
 
@@ -71,7 +71,7 @@ The file [numbers2.txt](./data/numbers2.txt) has many lines, each with many numb
 - Implement and run a Spark job that computes the sum of all the numbers.
 - Write the command you used to run it in the README and show a screenshot of the result.
 
-The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum2.py /opt/bitnami/spark/app/data/numbers2.txt`
+**The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum2.py /opt/bitnami/spark/app/data/numbers2.txt`**
 
 ![screenshoot S3Q1](./images/S3Q1/S3Q1-1.png)
 
@@ -83,7 +83,7 @@ The file [numbers2.txt](./data/numbers2.txt) has many lines, each with many numb
 - Implement and run a Spark job that computes the sum of all the even numbers.
 - Write the command you used to run it in the README and show a screenshot of the result.
 
-The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum3.py /opt/bitnami/spark/app/data/numbers2.txt`
+**The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_sum3.py /opt/bitnami/spark/app/data/numbers2.txt`**
 
 ![screenshoot S3Q2](./images/S3Q2/S3Q2.png)
 
@@ -95,7 +95,7 @@ The file [people.txt](./data/people.txt) has many lines, each with `{NAME} {LANG
 - Implement and run a Spark job that counts how many people live in each city.
 - Write the command you used to run it in the README and show a screenshot of the result.
 
-The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_count_people.py /opt/bitnami/spark/app/data/people.txt`
+**The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.20.0.2:7077 /opt/bitnami/spark/app/spark_count_people.py /opt/bitnami/spark/app/data/people.txt`**
 
 ![screenshoot S3Q3](./images/S3Q3/S3Q3.png)
 
@@ -106,6 +106,10 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 - Create a file `spark_count_bigrams.py`
 - Implement and run a Spark job that counts how many tines each bigram appears.
 - Write the command you used to run it in the README and show a screenshot of the result.
+
+**The command used to run this Spark job is `docker-compose exec spark-master spark-submit --master spark://172.18.0.2:7077 /opt/bitnami/spark/app/spark_count_bigrams.py /opt/bitnami/spark/app/data/cat.txt`**
+
+![screenshoot S3Q4](./images/S3Q4/S3Q4.png)
 
 ## Lab 3: Parsing Tweets as JSON
 
