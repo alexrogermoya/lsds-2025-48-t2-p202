@@ -19,13 +19,13 @@ class Tweet:
 def parse_tweet(tweet: str) -> Tweet:
     tweet_json = json.loads(tweet)
     return Tweet(
-        tweet_id=tweet_json["id"],
-        text=tweet_json["text"],
-        user_id=tweet_json["user"]["id"],
-        user_name=tweet_json["user"]["name"],
-        language=tweet_json["lang"],
-        timestamp_ms=tweet_json["timestamp_ms"],
-        retweet_count=tweet_json["retweet_count"],
+        tweet_id=tweet_json.get("id", 0),
+        text=tweet_json.get("text", ""),
+        user_id=tweet_json.get("user", {}).get("id", 0),
+        user_name=tweet_json.get("user", {}).get("name", ""),
+        language=tweet_json.get("lang", ""),
+        timestamp_ms=tweet_json.get("timestamp_ms", 0),
+        retweet_count=tweet_json.get("retweet_count", 0),
     )
 
 
