@@ -162,6 +162,8 @@ The file [cat.txt](./data/cat.txt) has many lines, each with a sentence.
 - Count the number of Tweets of each language using a dictionary. [Help](https://www.w3schools.com/python/python_dictionaries.asp)
 - Print the dictionary. Take a screenshot and add it to the README.
 
+![screenshot L3Q2](./images/L3Q2/L3Q2.png)
+
 ## Lab 4: Analyzing Tweets with Spark
 
 ### [L4Q0] [10 marks] Filtering Tweets by language with Spark
