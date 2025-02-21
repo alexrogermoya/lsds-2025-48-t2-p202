@@ -38,19 +38,13 @@ def find_most_repeated_retweets(input_path, language):
         )
     )
 
-    # Remove duplicates by tweet ID (keep the first occurrence)
-    # unique_retweets_rdd = retweet_info_rdd.reduceByKey(lambda x, y: x)
-
-    # Extract only the (username, retweet_count, text) tuples
-    # retweet_data_rdd = unique_retweets_rdd.map(lambda x: x[1])
-
-    # Aggregate retweets by summing the counts for each unique tweet ID
+    # Aggregate retweets for each unique tweet ID
     aggregated_rdd = retweet_info_rdd.reduceByKey(
         lambda a, b: (
             a[0],
             a[1],
             a[2] + b[2],
-        )  # Keep username & text, sum retweet counts
+        )
     )
 
     # Sort by retweet count in descending order and take top 10
