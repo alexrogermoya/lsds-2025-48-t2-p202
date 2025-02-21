@@ -12,7 +12,7 @@ def parse_json_safe(line):
         return None
 
 
-# Function to filter tweets by language and find msot retweeted user
+# Function to filter tweets by language and find most retweeted user
 def find_most_retweeted_user(input_path, language):
 
     conf = SparkConf().setAppName("spark-tweet-retweets")
@@ -45,14 +45,14 @@ def find_most_retweeted_user(input_path, language):
         )  # (User ID, (Username, Retweet count))
     )
 
-    # Su, the retweet counts for each user
+    # Sum, the retweet counts for each user
     total_user_retweet_count_rdd = user_retweet_count_rdd.reduceByKey(
         lambda a, b: (a[0], a[1] + b[1])  # (Username, Total retweet count)
     )
     # Sort by retweet count in descending order and take top 10
     top_users = (
         total_user_retweet_count_rdd.map(lambda x: (x[0], x[1][0], x[1][1]))
-        .sortBy(lambda x: x[1], ascending=False)
+        .sortBy(lambda x: x[2], ascending=False)
         .take(10)
     )
 
