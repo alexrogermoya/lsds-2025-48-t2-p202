@@ -238,17 +238,25 @@ AWS allows us to rent virtual servers and deploy a Spark cluster to do data anly
 
 - Paste a screenshot
 
+![screenshot S4Q0-1](./images/S4Q0/S4Q0-1.png)
+
 - In the bucket, create 4 folders: `input`, `app`, `logs` and `output`
 
 - Paste a screenshot
+
+![screenshot S4Q0-2](./images/S4Q0/S4Q0-2.png)
 
 - Upload the `Eurovision3.json` file inside the `input` folder
 
 - Paste a screenshot
 
+![screenshot S4Q0-3](./images/S4Q0/S4Q0-3.png)
+
 - Upload `spark_tweet_user_retweets.py` and `tweet_parser.py` in the `app` folder
 
 - Paste a screenshot
+
+![screenshot S4Q0-4](./images/S4Q0/S4Q0-4.png)
 
 - Open the [EMR console](https://us-east-1.console.aws.amazon.com/emr/home?region=us-east-1#/clusters)
 
@@ -262,6 +270,8 @@ AWS allows us to rent virtual servers and deploy a Spark cluster to do data anly
   - Instance profile: `EMR_EC2_DefaultRole`
 - Paste a screenshot
 
+![screenshot S4Q0-5](./images/S4Q0/S4Q0-5.png)
+
 - In `Steps`, select `Add step`.
 
   - Type: `Spark application`
@@ -273,14 +283,20 @@ AWS allows us to rent virtual servers and deploy a Spark cluster to do data anly
 
 - Paste a screenshot
 
+![screenshot S4Q0-6](./images/S4Q0/S4Q0-6.png)
+
 - When you submit a step, wait until the `Status` is `Completed`.
 
 - Paste a screenshot
+
+![screenshot S4Q0-7](./images/S4Q0/S4Q0-7.png)
 
 > [!TIP]
 > You can find the logs in your S3 bucket: `logs/{cluster id}/containers/application_*_{run number}/container_*_000001/stdout.gz` - they might take some minutes to appear
 
 - Paste a screenshot of the log where we can see: how much time it took, what are the ids of the ten most retweeted users.
+
+![screenshot S4Q0-8](./images/S4Q0/S4Q0-8.png)
 
 # Additional exercises
 
