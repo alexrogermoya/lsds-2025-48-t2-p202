@@ -1,10 +1,7 @@
-from dataclasses import dataclass
 import json
-import sys
+from dataclasses import dataclass
 
-_, source = sys.argv
-
-
+# Define the Tweet class
 @dataclass
 class Tweet:
     tweet_id: int
@@ -15,9 +12,11 @@ class Tweet:
     timestamp_ms: int
     retweet_count: int
 
-
+# Function to parse a tweet
 def parse_tweet(tweet: str) -> Tweet:
-    tweet_json = json.loads(tweet)
+    if not tweet.strip(): 
+        return None
+    tweet_json = json.loads(tweet)  
     return Tweet(
         tweet_id=tweet_json.get("id", 0),
         text=tweet_json.get("text", ""),
@@ -28,8 +27,8 @@ def parse_tweet(tweet: str) -> Tweet:
         retweet_count=tweet_json.get("retweet_count", 0),
     )
 
-
-with open(source, "r", encoding="utf-8") as f:
-    first_line = f.readline().strip()
-    tweet = parse_tweet(first_line)
-    print(f"\n{tweet}\n")
+# Read the first tweet from Eurovision3.json and print
+with open("/opt/bitnami/spark/app/data/Eurovision3.json", "r", encoding="utf-8") as f:
+    first_line = f.readline().strip()  
+    tweet = parse_tweet(first_line)  
+    print(f"\n{tweet}\n")  
