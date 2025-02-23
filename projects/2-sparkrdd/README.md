@@ -298,7 +298,19 @@ AWS allows us to rent virtual servers and deploy a Spark cluster to do data anly
 
 ![screenshot S4Q0-8](./images/S4Q0/S4Q0-8.png)
 
-*Note: this is not the correct output, since we did this previously to change the code to have less RT counts*
+*Note: this is not the correct output, since we did this previously to change the code to have less RT counts. After changes, we have next:*
+
+Top 10 most retweeted users in es:
+1. User: carmen_abcdd, Total retweets: 5834
+2. User: NetflixES, Total retweets: 5502
+3. User: LVPibai, Total retweets: 4932
+4. User: LVPibai, Total retweets: 3933
+5. User: masorhu, Total retweets: 3736
+6. User: serperort, Total retweets: 3492
+7. User: carloscarmo98, Total retweets: 2945
+8. User: eurovision_tve, Total retweets: 2102
+9. User: ManuGuix, Total retweets: 1997
+10. User: _Parao, Total retweets: 1690
 
 # Additional exercises
 
