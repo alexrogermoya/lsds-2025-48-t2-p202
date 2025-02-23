@@ -3,12 +3,14 @@ import json
 import shutil
 import os
 from pyspark import SparkConf, SparkContext
-from tweet_parser import parse_tweet 
+from tweet_parser import parse_tweet
+
 
 # Function to extract bigrams from a given tweet's text
 def extract_bigrams(text):
     words = text.split()
     return [(words[i], words[i + 1]) for i in range(len(words) - 1)]
+
 
 # Function to filter tweets by language and process bigrams
 def find_most_repeated_bigrams(input_path, output_path, language):
@@ -24,9 +26,9 @@ def find_most_repeated_bigrams(input_path, output_path, language):
     # Read the tweets from the file, use 'parse_tweet', filter by language and extract bigrams
     tweets_rdd = sc.textFile(input_path)
     parsed_rdd = tweets_rdd.map(parse_tweet).filter(lambda tweet: tweet is not None)
-    bigrams_rdd = parsed_rdd.filter(
-        lambda tweet: tweet.language == language
-    ).flatMap(lambda tweet: extract_bigrams(tweet.text)) 
+    bigrams_rdd = parsed_rdd.filter(lambda tweet: tweet.language == language).flatMap(
+        lambda tweet: extract_bigrams(tweet.text)
+    )
 
     # Count the occurrences of each bigram
     bigram_counts_rdd = bigrams_rdd.map(lambda bigram: (bigram, 1)).reduceByKey(
@@ -44,6 +46,7 @@ def find_most_repeated_bigrams(input_path, output_path, language):
     ).saveAsTextFile(output_path)
 
     sc.stop()
+
 
 # Main script execution
 if __name__ == "__main__":

@@ -4,6 +4,7 @@ import os
 from pyspark import SparkConf, SparkContext
 from tweet_parser import parse_tweet  # Import the parse_tweet function
 
+
 # Function to find the most retweeted tweets in a specific language
 def find_most_repeated_retweets(input_path, language):
     conf = SparkConf().setAppName("spark-tweet-retweets")
@@ -26,7 +27,9 @@ def find_most_repeated_retweets(input_path, language):
         lambda tweet: (
             tweet.retweeted_status["id"],  # Retweeted tweet ID (key)
             (
-                tweet.retweeted_status["user"]["screen_name"],  # Original poster username
+                tweet.retweeted_status["user"][
+                    "screen_name"
+                ],  # Original poster username
                 tweet.retweeted_status["text"],  # Tweet text
                 tweet.retweeted_status["retweet_count"],  # Retweet count
             ),
@@ -34,9 +37,7 @@ def find_most_repeated_retweets(input_path, language):
     )
 
     # Use 'reduceByKey' only keeping the max retweet count
-    aggregated_rdd = retweet_info_rdd.reduceByKey(
-        lambda a, b: a if a[2] > b[2] else b 
-    )
+    aggregated_rdd = retweet_info_rdd.reduceByKey(lambda a, b: a if a[2] > b[2] else b)
 
     # Sort by retweet count in descending order and take the top 10
     top_retweets = (
@@ -52,9 +53,9 @@ def find_most_repeated_retweets(input_path, language):
 
     sc.stop()
 
+
 # Main script execution
 if __name__ == "__main__":
     language = sys.argv[1]
     input_path = sys.argv[2]
     find_most_repeated_retweets(input_path, language)
-    

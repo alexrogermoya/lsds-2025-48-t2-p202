@@ -2,6 +2,7 @@ import sys
 from pyspark import SparkConf, SparkContext
 from tweet_parser import parse_tweet
 
+
 # Function to find the most retweeted user
 def find_most_retweeted_user(input_path, language):
 
@@ -22,10 +23,25 @@ def find_most_retweeted_user(input_path, language):
     # Extract the retweet information (or the original tweet information)
     retweet_info_rdd = filtered_tweets_rdd.flatMap(
         lambda tweet: [
-            (tweet.retweeted_status["id"] if tweet.retweeted_status else tweet.tweet_id, (
-                tweet.retweeted_status["user"]["screen_name"] if tweet.retweeted_status else tweet.user_name,
-                tweet.retweet_count if not tweet.retweeted_status else tweet.retweeted_status["retweet_count"],
-            ))
+            (
+                (
+                    tweet.retweeted_status["id"]
+                    if tweet.retweeted_status
+                    else tweet.tweet_id
+                ),
+                (
+                    (
+                        tweet.retweeted_status["user"]["screen_name"]
+                        if tweet.retweeted_status
+                        else tweet.user_name
+                    ),
+                    (
+                        tweet.retweet_count
+                        if not tweet.retweeted_status
+                        else tweet.retweeted_status["retweet_count"]
+                    ),
+                ),
+            )
         ]
     )
 
@@ -33,13 +49,15 @@ def find_most_retweeted_user(input_path, language):
     total_user_retweet_count_rdd = retweet_info_rdd.reduceByKey(
         lambda a, b: (
             a[0],
-            max(a[1], b[1]),  
+            max(a[1], b[1]),
         )
     )
 
     # Sort by the total number of retweets and take the top 10
     top_users = (
-        total_user_retweet_count_rdd.map(lambda x: (x[1][0], x[1][1]))  # (Username, Total retweets)
+        total_user_retweet_count_rdd.map(
+            lambda x: (x[1][0], x[1][1])
+        )  # (Username, Total retweets)
         .sortBy(lambda x: x[1], ascending=False)
         .take(10)
     )

@@ -8,7 +8,9 @@ sc = SparkContext(conf=conf)
 
 lines_rdd = sc.textFile(source)
 bigrams_rdd = lines_rdd.flatMap(lambda line: zip(line.split(), line.split()[1:]))
-bigram_counts_rdd = bigrams_rdd.map(lambda bigram: (bigram, 1)).reduceByKey(lambda a, b: a + b)
+bigram_counts_rdd = bigrams_rdd.map(lambda bigram: (bigram, 1)).reduceByKey(
+    lambda a, b: a + b
+)
 
 result = bigram_counts_rdd.collect()
 

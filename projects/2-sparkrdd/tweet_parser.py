@@ -12,7 +12,7 @@ class Tweet:
     language: str
     timestamp_ms: int
     retweet_count: int
-    retweeted_status: dict  # To manage retweets at L4Q2 and L4Q4
+    retweeted_status: dict  # To manage retweets at L4Q2 and L4Q3
 
 
 # Function to parse a tweet
