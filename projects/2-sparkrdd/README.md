@@ -298,6 +298,8 @@ AWS allows us to rent virtual servers and deploy a Spark cluster to do data anly
 
 ![screenshot S4Q0-8](./images/S4Q0/S4Q0-8.png)
 
+*Note: this is not the correct output, since we did this previously to change the code to have less RT counts*
+
 # Additional exercises
 
 You can earn an additional 2 marks (over 10) on this project's grade by working on additional exercises. To earn the full +2, you need to complete 4 additional exercises.
