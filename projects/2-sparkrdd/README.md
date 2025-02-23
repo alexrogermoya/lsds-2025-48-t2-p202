@@ -332,7 +332,17 @@ Paste the first Wikipedia article here, properly formatted as JSON.
 
 Write a Python or bash script that splits the big file into multiple files, one file per line. The file name should be the identifier of the article, and the content of the file the full JSON object.
 
+**Next is the Python script required:**  [split_wikipedia.py](./additional/split_wikipedia.py)
+
 Run said script for the 10 and 1k datasets.
+
+**The following screenshot shows how it worked correctly for both examples:**
+
+![screenshot AD1Q1-1](./images/AD1/AD1Q1-1.png)
+
+**The following screenshot is a concrete example of the start of a file:**
+
+![screenshot AD1Q1-2](./images/AD1/AD1Q1-2.png)
 
 ### [AD1Q2] Building the reverse index
 
