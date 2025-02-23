@@ -11,12 +11,16 @@ class Tweet:
     language: str
     timestamp_ms: int
     retweet_count: int
+    retweeted_id: int = 0
 
 # Function to parse a tweet
 def parse_tweet(tweet: str) -> Tweet:
     if not tweet.strip(): 
         return None
-    tweet_json = json.loads(tweet)  
+    tweet_json = json.loads(tweet)
+
+    retweeted_status = tweet_json.get("retweeted_status", {})  # Extraemos el objeto si existe
+
     return Tweet(
         tweet_id=tweet_json.get("id", 0),
         text=tweet_json.get("text", ""),
@@ -24,7 +28,8 @@ def parse_tweet(tweet: str) -> Tweet:
         user_name=tweet_json.get("user", {}).get("name", ""),
         language=tweet_json.get("lang", ""),
         timestamp_ms=tweet_json.get("timestamp_ms", 0),
-        retweet_count=tweet_json.get("retweet_count", 0),
+        retweet_count=retweeted_status.get("retweet_count", tweet_json.get("retweet_count", 0)),
+        retweeted_id = retweeted_status.get("id", 0),
     )
 
 # Read the first tweet from Eurovision3.json and print

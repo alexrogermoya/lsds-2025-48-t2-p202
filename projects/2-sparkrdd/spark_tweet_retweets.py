@@ -3,14 +3,7 @@ import json
 import shutil
 import os
 from pyspark import SparkConf, SparkContext
-
-
-def parse_json_safe(line):
-    try:
-        return json.loads(line)
-    except json.JSONDecodeError:
-        return None
-
+from tweet_parser import parse_tweet
 
 # Function to filter tweets by language and process retweets
 def find_most_repeated_retweets(input_path, language):
@@ -18,22 +11,20 @@ def find_most_repeated_retweets(input_path, language):
     conf = SparkConf().setAppName("spark-tweet-retweets")
     sc = SparkContext(conf=conf)
 
-    tweets_rdd = sc.textFile(input_path)
-    parsed_rdd = tweets_rdd.map(parse_json_safe).filter(lambda tweet: tweet is not None)
+    sc.addPyFile("/opt/bitnami/spark/app/tweet_parser.py")
 
-    filtered_tweets_rdd = parsed_rdd.filter(
-        lambda tweet: tweet.get("lang") == language and "retweeted_status" in tweet
-    )
+    tweets_rdd = sc.textFile(input_path)
+    parsed_rdd = tweets_rdd.map(parse_tweet).filter(lambda tweet: tweet is not None)
+
+    filtered_tweets_rdd = parsed_rdd.filter(lambda tweet: tweet.language == language)
 
     retweet_info_rdd = filtered_tweets_rdd.map(
         lambda tweet: (
-            tweet["retweeted_status"]["id"],  # Retweeted tweet ID (key)
+            tweet.retweeted_id if tweet.retweeted_id != 0 else tweet.tweet_id,  # Retweeted tweet ID (key)
             (
-                tweet["retweeted_status"]["user"][
-                    "screen_name"
-                ],  # Username of the original poster
-                tweet["retweeted_status"]["text"],  # Tweet text
-                tweet["retweeted_status"]["retweet_count"],  # Retweet count
+                tweet.user_name,
+                tweet.text,
+                tweet.retweet_count,
             ),
         )
     )
@@ -43,7 +34,7 @@ def find_most_repeated_retweets(input_path, language):
         lambda a, b: (
             a[0],
             a[1],
-            a[2] + b[2],
+            max(a[2], b[2]),
         )
     )
 
