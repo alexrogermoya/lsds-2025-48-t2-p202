@@ -17,17 +17,21 @@ PRODUCER_CONFIG = {
 
 producer = Producer(PRODUCER_CONFIG)
 
-c = int(start_value)
+start_value = int(start_value)
+end_value = int(end_value)
+period_seconds = int(period_seconds)
 step = int(step)
+
+c = start_value
 while True:
-    sleep(int(period_seconds))
+    sleep(period_seconds)
     key = metric_name
-    if c == int(start_value):
-        value = int(start_value)
+    if c == start_value:
+        value = start_value
         c += step
-    elif c == int(end_value):
-        value = int(end_value)
-        c = int(start_value)
+    elif c == end_value:
+        value = end_value
+        c = start_value
     else:
         value = c
         c += step

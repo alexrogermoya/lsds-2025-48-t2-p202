@@ -216,6 +216,8 @@ packages-received: {"value": 510}
 ...
 ```
 
+## ![screenshoot S5Q5](./images/S5Q5/S5Q5.png)
+
 > [!TIP]
 > Take a look at [producer.py](./../../resources/kafka-quickstart/producer.py).
 
