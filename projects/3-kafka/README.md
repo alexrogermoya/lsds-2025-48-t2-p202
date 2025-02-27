@@ -3,7 +3,8 @@
 Engineers at Acme Inc. are suffering many incidents and outages. During these outages, their services go down and customers cannot use the website and other services they offer. They want to start publishing metrics from their servers such as CPU usage, failure count, memory usage, request count, packages received in their warehouses, etc. Then, they wish to leverage some service which can help them define rules and trigger alerts. For example, send a Discord message with an alarm when the CPU usage is above 80%. They hope if they get an alert in realtime about any issues in their services, they will be able to fix them quickly before there is customer impact.
 
 You need to build said realtime monitoring system which:
-- **reads all the metrics from the sources in realtime** 
+
+- **reads all the metrics from the sources in realtime**
 - allow engineers to **create and delete rules** using an API. For example: trigger an alarm when `cpu-usage-server-124` is above `90`.
 - **send alarms in real-time to a Discord channel**. For example: send a Discord message when the `cpu-usage-server-124 > 90` rule is triggered.
 
@@ -12,13 +13,15 @@ We will call this system Super Simple Realtime Monitoring System (SSRMS). You ca
 # Table of contents
 
 - [Required exercises](#required-exercises)
-    - [Seminar 5: Producing metrics to Kafka](#seminar-5-producing-metrics-to-kafka)
-    - [Lab 5: Building the rules service](#lab-5-building-the-rules-service)
-    - [Lab 6: Building the alarms service](#lab-6-building-the-alarms-service)
+
+  - [Seminar 5: Producing metrics to Kafka](#seminar-5-producing-metrics-to-kafka)
+  - [Lab 5: Building the rules service](#lab-5-building-the-rules-service)
+  - [Lab 6: Building the alarms service](#lab-6-building-the-alarms-service)
 
 - [Design](#design)
-    - [rules service](#rules-service)
-    - [alarms service](#alarms-service)
+
+  - [rules service](#rules-service)
+  - [alarms service](#alarms-service)
 
 - [Additional exercises](#additional-exercises)
 
@@ -75,7 +78,7 @@ During this seminar session, you must create scripts that simulate the devices p
 
 ### [S5Q2] [5 marks] Create Kafka topics
 
-The [compose.kafka.yaml](./compose.kafka.yaml) file has a full Kafka deployment with 1 broker. 
+The [compose.kafka.yaml](./compose.kafka.yaml) file has a full Kafka deployment with 1 broker.
 
 Start the Kafka cluster with `docker compose -f compose.kafka.yaml up`.
 
@@ -94,7 +97,7 @@ exit
 
 Paste a screenshot.
 
----
+## ![screenshoot S5Q2](./images/S5Q2/S5Q2.png)
 
 ### [S5Q3] [5 marks] Implement the constant source emulator
 
@@ -122,6 +125,7 @@ packages-received: {"value": 501}
 packages-received: {"value": 501}
 ...
 ```
+
 > [!TIP]
 > Take a look at [producer.py](./../../resources/kafka-quickstart/producer.py).
 
@@ -172,7 +176,6 @@ docker exec -it kafka-cluster-kafka-1-1 /bin/sh
 /bin/kafka-console-consumer --bootstrap-server kafka-1:9092 --topic metrics --property print.key=true
 ```
 
-
 ### [S5Q5] [5 marks] Implement the stairs source emulator
 
 Inside the [projects\3-kafka\sources](./sources/) folder, create a Python script `stairs.py`.
@@ -220,7 +223,6 @@ docker exec -it kafka-cluster-kafka-1-1 /bin/sh
 /bin/kafka-console-consumer --bootstrap-server kafka-1:9092 --topic metrics --property print.key=true
 ```
 
-
 ## Lab 5: Building the rules service
 
 During this lab session, you must build the `rules` service as described in [rules service](#rules-service).
@@ -243,7 +245,6 @@ Implement the first endpoint of the `rules` API: [POST /rules](#post-rules).
 > [!TIP]
 > Use the [`uuid.uuid4()`](https://stackoverflow.com/questions/534839/how-to-create-a-guid-uuid-in-python) method to generate the rule id.
 
-
 **[10 marks] For every created rule, [publish it to the `rules` Kafka topic](https://docs.confluent.io/kafka-clients/python/current/overview.html#initialization)**.
 
 > [!TIP]
@@ -256,7 +257,6 @@ docker exec -it kafka-cluster-kafka-1-1 /bin/sh
 
 /bin/kafka-console-consumer --bootstrap-server kafka-1:9092 --topic rules --property print.key=true
 ```
-
 
 ---
 
@@ -293,6 +293,7 @@ services:
 ```
 
 Start the services:
+
 ```zsh
 docker compose up --build
 ```
@@ -351,15 +352,13 @@ Add 3 replicas of the `alarms` service to the [compose.yaml](./compose.yaml) fil
 
 Deploy the full system with Docker: `docker compose up --build`
 
-Create different rules with the rules API and start producing metrics with the [emulated sources](./sources/). 
+Create different rules with the rules API and start producing metrics with the [emulated sources](./sources/).
 
 Paste screenshots of how you receive the alarms in Discord.
 
 **How are `metrics` distributed between alarm containers?**
 
 **What happens if you suddenly stop one of alarm service instances?**
-
-
 
 ---
 
@@ -372,6 +371,7 @@ Paste screenshots of how you receive the alarms in Discord.
 > SSRMS system uses Kafka extensively. Read and study the [Kafka: a Distributed Messaging System for Log Processing](https://www.microsoft.com/en-us/research/wp-content/uploads/2017/09/Kafka.pdf?msockid=01dc1031619a67bb08ec049760dd66cc) paper.
 
 SSRMS is composed of 2 services, metric sources and clients:
+
 - The [**sources**](#sources) send metrics into the system. For example, sensors, devices, and other services.
 - The [**clients**](#clients) (Operation Engineers at Nozama) use the Rules API to create and update rules in the system.
 - The [**rules** service](#rules-service) allows users to create and update alarm rules through the API and stores them in the `rules (compacted) topic`.
@@ -418,20 +418,21 @@ A rule is defined as the `discord_webhook_url` where alarms must be sent when th
 
 ```json
 {
-    "id": "dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9",
-    "metric_name": "packages-received",
-    "threshold": 500,
-    "discord_webhook_url": "https://discordapp.com/api/webhooks/15434354352132/hfaslkdfhjsahldkf_02340lasdhf_fksdlf"
+  "id": "dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9",
+  "metric_name": "packages-received",
+  "threshold": 500,
+  "discord_webhook_url": "https://discordapp.com/api/webhooks/15434354352132/hfaslkdfhjsahldkf_02340lasdhf_fksdlf"
 }
 ```
 
 In order for the `clients` to create or delete `rules` to trigger alarms, the `rules` service exposes a simple HTTP REST API. The API for the `rules` service only allows 2 operations:
+
 - [Create a rule](#post-rules)
 - [Delete a rule](#delete-rulesid)
 
 #### POST /rules
 
-The `clients` can create a new rule through this endpoint. The `rules` service takes each new rule and publishes it to the `rules` Kafka topic. The key in the Kafka topic must be the rule id, and the value the [full rule as a JSON string](https://pythonexamples.org/python-dict-to-json/). 
+The `clients` can create a new rule through this endpoint. The `rules` service takes each new rule and publishes it to the `rules` Kafka topic. The key in the Kafka topic must be the rule id, and the value the [full rule as a JSON string](https://pythonexamples.org/python-dict-to-json/).
 
 For example, the `clients` can create a rule to send a Discord message when `packages-received` is higher than 500 in the `rules` service with address `localhost:9090` as follows:
 
@@ -440,32 +441,36 @@ POST http://localhost:9090/rules
 ```
 
 Body:
+
 ```json
 {
-    "metric_name": "packages-received",
-    "threshold": 500,
-    "discord_webhook_url": "https://discordapp.com/api/webhooks/15434354352132/hfaslkdfhjsahldkf_02340lasdhf_fksdlf"
+  "metric_name": "packages-received",
+  "threshold": 500,
+  "discord_webhook_url": "https://discordapp.com/api/webhooks/15434354352132/hfaslkdfhjsahldkf_02340lasdhf_fksdlf"
 }
 ```
 
 Response:
+
 ```json
 {
-    "id": "dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9",
-    "metric_name": "packages-received",
-    "threshold": 500,
-    "discord_webhook_url": "https://discordapp.com/api/webhooks/15434354352132/hfaslkdfhjsahldkf_02340lasdhf_fksdlf"
+  "id": "dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9",
+  "metric_name": "packages-received",
+  "threshold": 500,
+  "discord_webhook_url": "https://discordapp.com/api/webhooks/15434354352132/hfaslkdfhjsahldkf_02340lasdhf_fksdlf"
 }
 ```
 
 Then, the `rules` service will publish the following record to the `rules` topic in Kafka:
 
 Key:
+
 ```
 dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9
 ```
 
 Value:
+
 ```
 {
     "id": "dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9",
@@ -486,6 +491,7 @@ DELETE http://localhost:9090/rules/dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9
 ```
 
 Response:
+
 ```json
 {}
 ```
@@ -493,15 +499,16 @@ Response:
 Then, the `rules` service will publish the following record to the `rules` topic in Kafka:
 
 Key:
+
 ```
 dc0d8a4c-46ea-4667-b6e9-eb7bf033fda9
 ```
 
 Value:
+
 ```
 null
 ```
-
 
 ### alarms service
 
@@ -590,17 +597,15 @@ curl -X POST {URL} -H 'Content-Type: application/json' -d '{
 
 # Additional exercises
 
-You can earn an additional 2 marks (over 10) on this project's grade by working on additional exercises. To earn the full +2, you need to complete 4 additional exercises. 
+You can earn an additional 2 marks (over 10) on this project's grade by working on additional exercises. To earn the full +2, you need to complete 4 additional exercises.
 
 ### [AD2Q0] Improve the `alarms` service rule matching algorithm
 
 Instead of having a materialized view of `rule_id -> rule`, also materialize `metric_name -> rules` for faster O(1) access when processing metrics.
 
-
 ### [AD2Q1] Extend the `rules` service with support for updating rules
 
 Add a `PUT /rules/{id}` method to the `rules` API which allows updating an existing rule.
-
 
 ### [AD2Q2] Extend the `rules` service with support for getting rules
 
@@ -663,6 +668,7 @@ Only allow publishing rules and metrics with a valid JWT token.
 ### [AD2Q11] Materialized view initialization in the alarms service
 
 Do not start processing metrics in the `alarms` service until all rules from the `rules` topic have been read. In other words:
+
 - Read the rules topic until reaching the head and populate the materialized view
 - Then, start consuming the `metrics` topic
 
