@@ -17,17 +17,22 @@ PRODUCER_CONFIG = {
 
 producer = Producer(PRODUCER_CONFIG)
 
-c = int(frequency)
+frequency = int(frequency)
+period_seconds = int(period_seconds)
+low_value = int(low_value)
+spike_value = int(spike_value)
+
+c = frequency
 
 while True:
-    sleep(int(period_seconds))
+    sleep(period_seconds)
     key = metric_name
-    if c == int(frequency):
+    if c == frequency:
         value = spike_value
         c -= 1
     elif c == 1:
         value = low_value
-        c = int(frequency)
+        c = frequency
     else:
         value = low_value
         c -= 1
