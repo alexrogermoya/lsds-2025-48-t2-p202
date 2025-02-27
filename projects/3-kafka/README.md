@@ -178,6 +178,8 @@ docker exec -it kafka-cluster-kafka-1-1 /bin/sh
 /bin/kafka-console-consumer --bootstrap-server kafka-1:9092 --topic metrics --property print.key=true
 ```
 
+## ![screenshoot S5Q4](./images/S5Q4/S5Q4.png)
+
 ### [S5Q5] [5 marks] Implement the stairs source emulator
 
 Inside the [projects\3-kafka\sources](./sources/) folder, create a Python script `stairs.py`.
