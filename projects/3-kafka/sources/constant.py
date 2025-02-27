@@ -18,7 +18,7 @@ producer = Producer(PRODUCER_CONFIG)
 while True:
     sleep(int(period_seconds))
     key = metric_name
-    value = {"value": metric_value}
+    value = {"value": int(metric_value)}
     print(f"{key}: {value}")
     producer.produce(TOPIC, key=key, value=json.dumps(value))
     producer.flush()
