@@ -9,6 +9,18 @@ services:
     environment:
       BROKER: kafka-1:9092
 
+  alarms:
+    build: alarms
+    ports:
+      - "5002:8000"
+    networks:
+      - kafka-cluster_kafka-cluster-network
+    environment:
+      BROKER: kafka-1:9092
+    deploy:
+      replicas: 3  
+
 networks:
   kafka-cluster_kafka-cluster-network:
     external: true
+
