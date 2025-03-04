@@ -10,7 +10,7 @@ _, metric_name, metric_value, period_seconds = sys.argv
 
 TOPIC = "metrics"
 PRODUCER_CONFIG = {
-    "bootstrap.servers": "localhost:19092,localhost:29092,localhost:39092",
+    "bootstrap.servers": "localhost:19092",
     "client.id": f"metrics-producer-{uuid.uuid4()}",
 }
 

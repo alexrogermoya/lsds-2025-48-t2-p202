@@ -3,7 +3,7 @@ services:
   rules:
     build: rules
     ports:
-      - "5001:80"
+      - "5001:8000"
     networks:
       - kafka-cluster_kafka-cluster-network
     environment:
