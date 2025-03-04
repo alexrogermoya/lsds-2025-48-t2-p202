@@ -57,6 +57,7 @@ def consume_metrics():
         for rule_id, rule in rules_materialized_view.items():
             if metric['name'] == rule['metric'] and metric['value'] > rule['threshold']:
                 print(f"Rule triggered! Metric {metric['name']} exceeded the threshold.")
+                send_alarm_to_discord(rule, metric) # Send an alarm when the rule is triggered
 
 # Start the metrics consumer in a background thread
 def start_metrics_consumer():
@@ -64,3 +65,34 @@ def start_metrics_consumer():
     metrics_consumer_thread.daemon = True
     metrics_consumer_thread.start()
 start_metrics_consumer()
+
+# -------------------------------------------
+# L6Q2: Sending Alarms to Discord
+# -------------------------------------------
+
+# Function to send alarm to Discord when a rule is triggered
+def send_alarm_to_discord(rule, metric):
+    discord_webhook_url = rule.get('discord_url')
+    if discord_webhook_url:
+        alarm_message = {
+            "content": f"Alarm triggered for {metric['name']}",
+            "embeds": [
+                {
+                    "title": "Alarm triggered",
+                    "description": f"{metric['name']} value {metric['value']} exceeded threshold {rule['threshold']}",
+                    "color": 16711680,  
+                    "fields": [
+                        {"name": "Rule ID", "value": rule['id']},
+                        {"name": "Metric Name", "value": metric['name']},
+                        {"name": "Metric Value", "value": metric['value']},
+                        {"name": "Rule Threshold", "value": rule['threshold']}
+                    ]
+                }
+            ]
+        }
+        response = requests.post(discord_webhook_url, json=alarm_message)
+        if response.status_code == 204:
+            print(f"Alarm sent to Discord for rule {rule['id']}")
+        else:
+            print(f"Failed to send alarm for rule {rule['id']}")
+            
