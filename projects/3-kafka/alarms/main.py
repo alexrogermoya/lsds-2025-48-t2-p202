@@ -18,7 +18,7 @@ rules_materialized_view = {}
 def consume_rules():
     consumer = KafkaConsumer(
         'rules',
-        bootstrap_servers='kafka-1:9092',
+        bootstrap_servers='kafka-cluster-kafka-1-1:9092',
         group_id='alarms-service',
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
@@ -47,7 +47,7 @@ start_background_thread()
 def consume_metrics():
     consumer = KafkaConsumer(
         'metrics',
-        bootstrap_servers='kafka-1:9092',
+        bootstrap_servers='kafka-cluster-kafka-1-1:9092',  
         group_id='alarms-service-metrics',
         value_deserializer=lambda x: json.loads(x.decode('utf-8'))
     )
@@ -55,9 +55,10 @@ def consume_metrics():
         metric = message.value
         print(f"Received metric: {metric}")
         for rule_id, rule in rules_materialized_view.items():
-            if metric['name'] == rule['metric'] and metric['value'] > rule['threshold']:
-                print(f"Rule triggered! Metric {metric['name']} exceeded the threshold.")
-                send_alarm_to_discord(rule, metric) # Send an alarm when the rule is triggered
+            if metric['name'] == rule['metric']:
+                if rule['condition'] == 'greater_than' and metric['value'] > rule['threshold']:
+                    print(f"Rule triggered! Metric {metric['name']} exceeded the threshold.")
+                    send_alarm_to_discord(rule, metric) # Send an alarm when the rule is triggered
 
 # Start the metrics consumer in a background thread
 def start_metrics_consumer():
@@ -72,7 +73,7 @@ start_metrics_consumer()
 
 # Function to send alarm to Discord when a rule is triggered
 def send_alarm_to_discord(rule, metric):
-    discord_webhook_url = rule.get('discord_url')
+    discord_webhook_url = rule.get('discord_url') 
     if discord_webhook_url:
         alarm_message = {
             "content": f"Alarm triggered for {metric['name']}",
@@ -95,4 +96,4 @@ def send_alarm_to_discord(rule, metric):
             print(f"Alarm sent to Discord for rule {rule['id']}")
         else:
             print(f"Failed to send alarm for rule {rule['id']}")
-            
+

@@ -11,7 +11,7 @@ _, metric_name, low_value, spike_value, period_seconds, frequency = sys.argv
 
 TOPIC = "metrics"
 PRODUCER_CONFIG = {
-    "bootstrap.servers": "localhost:19092,localhost:29092,localhost:39092",
+    "bootstrap.servers": "localhost:19092",
     "client.id": f"metrics-producer-{uuid.uuid4()}",
 }
 
