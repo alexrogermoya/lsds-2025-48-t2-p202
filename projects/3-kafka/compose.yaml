@@ -1,4 +1,5 @@
 name: lsds-kafka-lab
+
 services:
   rules:
     build: rules
@@ -11,8 +12,6 @@ services:
 
   alarms:
     build: alarms
-    deploy:
-      replicas: 3
     networks:
       - kafka-cluster_kafka-cluster-network
     environment:
@@ -21,5 +20,3 @@ services:
 networks:
   kafka-cluster_kafka-cluster-network:
     external: true
-
-

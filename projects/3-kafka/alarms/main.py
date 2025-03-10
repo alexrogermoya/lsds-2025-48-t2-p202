@@ -1,99 +1,99 @@
-from fastapi import FastAPI
 from kafka import KafkaConsumer
-import threading
 import json
+import os
+import threading
+import time
 import requests
 
-# Initialize FastAPI app
-app = FastAPI()
+rules_view = {}
 
-# Dictionary to hold rules 
-rules_materialized_view = {}
+KAFKA_BROKER = os.getenv("BROKER", "kafka:9092")
+METRICS_TOPIC = "metrics"
 
-# -------------------------------------------
-# L6Q0: Create the Materialized View of Rules
-# -------------------------------------------
+def send_alarm_to_discord(webhook_url, rule_id, metric, value, threshold):
+    if not webhook_url:
+        return
 
-# Kafka consumer to consume rules topic
-def consume_rules():
-    consumer = KafkaConsumer(
-        'rules',
-        bootstrap_servers='kafka-cluster-kafka-1-1:9092',
-        group_id='alarms-service',
-        value_deserializer=lambda x: json.loads(x.decode('utf-8'))
-    )
-    for message in consumer:
-        rule_id = message.key.decode('utf-8')
-        new_rule = message.value
-        if new_rule == "":
-            if rule_id in rules_materialized_view:
-                del rules_materialized_view[rule_id]
+    message = {
+        "embeds": [
+            {
+                "title": "🚨 Alarm Triggered! 🚨",
+                "description": f"Metric **{metric}** exceeded the threshold.",
+                "color": 16711680,  # Red
+                "fields": [
+                    {"name": "Rule ID", "value": rule_id},
+                    {"name": "Metric", "value": metric},
+                    {"name": "Value", "value": str(value)},
+                    {"name": "Threshold", "value": str(threshold)}
+                ]
+            }
+        ]
+    }
+
+    try:
+        response = requests.post(webhook_url, json=message)
+        if response.status_code == 204:
+            print(f"✅ Alarm sent for rule {rule_id}.")
         else:
-            rules_materialized_view[rule_id] = new_rule
-        print("Updated rules:", rules_materialized_view)
+            print(f"❌ Error sending alarm: {response.status_code}")
+    except Exception as e:
+        print(f"❌ Error connecting to Discord: {e}")
 
-# Start the consumer in a background thread
-def start_background_thread():
-    consumer_thread = threading.Thread(target=consume_rules)
-    consumer_thread.daemon = True
-    consumer_thread.start()
-start_background_thread()
+def consume_rules():
+    global rules_view
+    consumer = KafkaConsumer(
+        "rules",
+        bootstrap_servers=KAFKA_BROKER,
+        value_deserializer=lambda v: json.loads(v.decode("utf-8")) if v else None,
+        key_deserializer=lambda k: k.decode("utf-8") if k else None,
+        auto_offset_reset="earliest",
+        enable_auto_commit=True
+    )
 
-# -------------------------------------------
-# L6Q1: Consume Metrics and Match Rules
-# -------------------------------------------
+    print("✅ Listening for rules...")
+    for message in consumer:
+        rule_id = message.key
+        new_rule = message.value
 
-# Kafka consumer to consume metrics topic and check against the materialized view of rules
+        if new_rule is None:
+            rules_view.pop(rule_id, None)
+            print(f"❌ Rule {rule_id} deleted.")
+        else:
+            rules_view[rule_id] = new_rule
+            print(f"🔄 Rule {rule_id} updated: {new_rule}")
+
 def consume_metrics():
     consumer = KafkaConsumer(
-        'metrics',
-        bootstrap_servers='kafka-cluster-kafka-1-1:9092',  
-        group_id='alarms-service-metrics',
-        value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+        METRICS_TOPIC,
+        bootstrap_servers=KAFKA_BROKER,
+        value_deserializer=lambda v: json.loads(v.decode("utf-8")) if v else None,
+        key_deserializer=lambda k: k.decode("utf-8") if k else None,
+        auto_offset_reset="earliest",
+        enable_auto_commit=True
     )
+
+    print("✅ Listening for metrics...")
     for message in consumer:
-        metric = message.value
-        print(f"Received metric: {metric}")
-        for rule_id, rule in rules_materialized_view.items():
-            if metric['name'] == rule['metric']:
-                if rule['condition'] == 'greater_than' and metric['value'] > rule['threshold']:
-                    print(f"Rule triggered! Metric {metric['name']} exceeded the threshold.")
-                    send_alarm_to_discord(rule, metric) # Send an alarm when the rule is triggered
+        metric_data = message.value
+        metric = metric_data.get("metric")
+        value = metric_data.get("value")
 
-# Start the metrics consumer in a background thread
-def start_metrics_consumer():
-    metrics_consumer_thread = threading.Thread(target=consume_metrics)
-    metrics_consumer_thread.daemon = True
-    metrics_consumer_thread.start()
-start_metrics_consumer()
+        if metric is None or value is None:
+            continue
 
-# -------------------------------------------
-# L6Q2: Sending Alarms to Discord
-# -------------------------------------------
+        for rule_id, rule in rules_view.items():
+            if metric == rule["metric"]:
+                condition = rule["condition"]
+                threshold = rule["threshold"]
+                if (condition == ">" and value > threshold) or \
+                   (condition == "<" and value < threshold) or \
+                   (condition == "==" and value == threshold):
+                    print(f"🚨 Alarm triggered for rule {rule_id}: {metric} ({value}) {condition} {threshold}")
+                    send_alarm_to_discord(rule.get("discord_webhook_url"), rule_id, metric, value, threshold)
 
-# Function to send alarm to Discord when a rule is triggered
-def send_alarm_to_discord(rule, metric):
-    discord_webhook_url = rule.get('discord_url') 
-    if discord_webhook_url:
-        alarm_message = {
-            "content": f"Alarm triggered for {metric['name']}",
-            "embeds": [
-                {
-                    "title": "Alarm triggered",
-                    "description": f"{metric['name']} value {metric['value']} exceeded threshold {rule['threshold']}",
-                    "color": 16711680,  
-                    "fields": [
-                        {"name": "Rule ID", "value": rule['id']},
-                        {"name": "Metric Name", "value": metric['name']},
-                        {"name": "Metric Value", "value": metric['value']},
-                        {"name": "Rule Threshold", "value": rule['threshold']}
-                    ]
-                }
-            ]
-        }
-        response = requests.post(discord_webhook_url, json=alarm_message)
-        if response.status_code == 204:
-            print(f"Alarm sent to Discord for rule {rule['id']}")
-        else:
-            print(f"Failed to send alarm for rule {rule['id']}")
+threading.Thread(target=consume_rules, daemon=True).start()
+threading.Thread(target=consume_metrics, daemon=True).start()
 
+while True:
+    time.sleep(1)
+    

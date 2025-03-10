@@ -11,7 +11,7 @@ app = FastAPI()
 rules_db = {}
 
 # Get broker address from environment variable
-KAFKA_BROKER = os.getenv("BROKER", "kafka-cluster-kafka-1-1:9092")
+KAFKA_BROKER = os.getenv("BROKER", "kafka-1:9092")
 
 print(f"Connecting to Kafka at {KAFKA_BROKER}...")
 
@@ -33,6 +33,7 @@ class RuleRequest(BaseModel):
     metric: str
     condition: str
     threshold: float
+    discord_webhook_url: str = None
 
 @app.post("/rules")
 def create_rule(rule: RuleRequest):
@@ -44,6 +45,7 @@ def create_rule(rule: RuleRequest):
         "metric": rule.metric,
         "condition": rule.condition,
         "threshold": rule.threshold,
+        "discord_webhook_url": rule.discord_webhook_url,
     }
 
     rules_db[rule_id] = rule_data

@@ -36,7 +36,7 @@ while True:
     else:
         value = low_value
         c -= 1
-    package = {"value": value}
+    package = {"metric": key, "value": value}
     print(f"{key}: {package}")
-    producer.produce(TOPIC, key=key, value=json.dumps(value))
+    producer.produce(TOPIC, key=key, value=json.dumps(package))
     producer.flush()

@@ -1,5 +1,2 @@
-fastapi
-uvicorn
 kafka-python
-pydantic
 requests
