@@ -362,9 +362,34 @@ Create different rules with the rules API and start producing metrics with the [
 
 Paste screenshots of how you receive the alarms in Discord.
 
+![screenshoot L6Q4](./images/L6Q4/L6Q4.png)
+
+**Next are the different steps we used to run this part and receive correctly the alarms:**
+
+```
+docker compose -f compose.kafka.yaml up -d
+
+docker compose up --build -d
+
+curl -X POST "http://localhost:5001/rules" -H "Content-Type: application/json" -d '{
+  "metric": "packages-received",
+  "condition": ">",
+  "threshold": 1500,
+  "discord_webhook_url": "https://discord.com/api/webhooks/1346537173511307328/kmvV0ZNcR7-dbxh05z2ykzw1Brc2o0glq2WtcxjV3SFMuJ9fT8awR0x2JMrBPU5A3jVL" 
+}'
+
+cd sources 
+
+python3 spikes.py packages-received 1000 2000 1 10
+```
+
 **How are `metrics` distributed between alarm containers?**
 
+*Since there are 3 alarm containers, Kafka divides the messages among them, preventing duplicate processing. This allows for scalability and fault tolerance while ensuring efficient message handling.*
+
 **What happens if you suddenly stop one of alarm service instances?**
+
+*If an alarm container stops unexpectedly, Kafka automatically reassigns its workload to the remaining instances in the consumer group.*
 
 ---
 
