@@ -44,6 +44,7 @@ def consume_rules():
     consumer = KafkaConsumer(
         "rules",
         bootstrap_servers=KAFKA_BROKER,
+        group_id="alarms-service",
         value_deserializer=lambda v: json.loads(v.decode("utf-8")) if v else None,
         key_deserializer=lambda k: k.decode("utf-8") if k else None,
         auto_offset_reset="earliest",

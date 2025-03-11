@@ -16,6 +16,10 @@ services:
       - kafka-cluster_kafka-cluster-network
     environment:
       BROKER: kafka-1:9092
+    deploy:
+      mode: replicated
+      replicas: 3
+      endpoint_mode: vip
 
 networks:
   kafka-cluster_kafka-cluster-network:
